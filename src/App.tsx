@@ -4,27 +4,32 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
+import { StoreContext } from 'storeon/react'
 
 import { LandingPage } from './pages/LandingPage/LandingPage'
 import { LoginPage } from './pages/LoginPage/LoginPage'
+
+import { store } from './store'
 
 import './App.scss'
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route>
-          <div>Not found :(</div>
-        </Route>
-      </Switch>
-    </Router>
+    <StoreContext.Provider value={store}>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route>
+            <div>Not found :(</div>
+          </Route>
+        </Switch>
+      </Router>
+    </StoreContext.Provider>
   )
 }
 
