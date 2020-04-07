@@ -20,6 +20,7 @@ const EditableClassSection = ({
       <h3>Section</h3>
       <div className="editable-class-section__editor">
         <CKEditor
+          config={{ language: 'ca' }}
           editor={InlineEditor}
           data={data}
           onChange={(event: any, editor: { getData: () => string }) => {

@@ -11,6 +11,8 @@ import { LoginPage } from './pages/LoginPage/LoginPage'
 
 import { store } from './store'
 
+import '@ckeditor/ckeditor5-build-inline/build/translations/ca'
+
 import './App.scss'
 
 const App = () => {
