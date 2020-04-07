@@ -1,10 +1,13 @@
 import React from 'react'
+import { Container } from '../../lib/atoms/Container/Container'
+
+import './LandingPage.scss'
 
 const LandingPage = () => {
   return (
-    <div>
-      Welcome to Hackovid Professors! :)
-    </div>
+    <Container>
+      <div>Welcome to Hackovid Professors! :)</div>
+    </Container>
   )
 }
 

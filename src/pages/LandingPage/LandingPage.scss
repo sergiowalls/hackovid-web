@@ -1,0 +1,8 @@
+
+.grid-block {
+  padding: 5px;
+
+  & > * {
+    background-color: gray;
+  }
+}

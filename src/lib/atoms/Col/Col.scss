@@ -1,0 +1,33 @@
+
+@import "../../styles/variables";
+
+$columns: 12;
+
+@mixin col($breakpoint) {
+  @for $column from 1 through $columns {
+    .col-#{$breakpoint}-#{$column} {
+      width: percentage($column / $columns);
+    }
+    .col-#{$breakpoint}-offset-#{$column} {
+      margin-left: percentage($column / $columns);
+    }
+  }
+}
+
+@media (min-width: 0) {
+  .col {
+    width: 100%;
+  }
+}
+@media (min-width: map_get($breakpoints, 'sm')) {
+  @include col('sm')
+}
+@media (min-width: map_get($breakpoints, 'md')) {
+  @include col('md')
+}
+@media (min-width: map_get($breakpoints, 'lg')) {
+  @include col('lg')
+}
+@media (min-width: map_get($breakpoints, 'xl')) {
+  @include col('xl')
+}
