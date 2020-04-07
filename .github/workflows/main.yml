@@ -23,4 +23,4 @@ jobs:
     - name: Push to docker hub :latest
       uses: actions-hub/docker@master
       with:
-        args: push ${GITHUB_REPOSITORY}:latest
+        args: push docker.pkg.github.com/${GITHUB_REPOSITORY}:latest
