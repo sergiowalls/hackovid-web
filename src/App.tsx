@@ -14,6 +14,7 @@ import { store } from './store'
 import '@ckeditor/ckeditor5-build-inline/build/translations/ca'
 
 import './App.scss'
+import { CreateClassPage } from './pages/CreateClassPage/CreateClassPage'
 
 const App = () => {
   return (
@@ -22,6 +23,9 @@ const App = () => {
         <Switch>
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/classes/create">
+            <CreateClassPage />
           </Route>
           <Route exact path="/">
             <LandingPage />
