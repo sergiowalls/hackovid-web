@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v1
 
     - name: The Docker CLI
       uses: actions-hub/docker@v1.0.0
