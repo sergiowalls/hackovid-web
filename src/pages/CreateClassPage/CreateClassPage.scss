@@ -1,27 +1,48 @@
 .create-class {
-  .create-class__title {
-    margin-top: 2em;
-    margin-bottom: 1.5em;
 
-    .create-class__title__editable {
-      font-size: 24px;
-      font-weight: bold;
+  $column-padding: 2em;
 
-      padding: 4px 8px;
+  .create-class__editable-column {
+    padding: $column-padding;
+    height: 100vh;
+
+    .create-class__editable {
+      .create-class__title {
+        margin-top: 2em;
+        margin-bottom: 1.5em;
+
+        .create-class__title__editable {
+          font-size: 24px;
+          font-weight: bold;
+
+          padding: 4px 8px;
+        }
+      }
+
+      .create-class__section {
+        margin-top: 1em;
+
+        .create-class__section__delete {
+          cursor: pointer;
+
+          padding: 0.2em;
+        }
+      }
+
+      .create-class__actions {
+        margin-top: 2em;
+      }
     }
   }
 
-  .create-class__section {
-    margin-top: 1em;
+  .create-class__favorites-column {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
 
-    .create-class__section__delete {
-      cursor: pointer;
+    padding: $column-padding;
+    height: 100vh;
 
-      padding: 0.2em;
+    .create-class__favorites {
+
     }
-  }
-
-  .create-class__actions {
-    margin-top: 2em;
   }
 }
