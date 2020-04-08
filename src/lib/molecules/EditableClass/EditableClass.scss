@@ -14,6 +14,20 @@
     }
   }
 
+  .editable-class__tags {
+    display: flex;
+    align-items: center;
+
+    .editable-class__tags__label {
+      padding-right: 5px;
+    }
+
+    .editable-class__tags__input-wrapper {
+      padding-left: 5px;
+      flex: 1;
+    }
+  }
+
   .editable-class__section {
     margin-top: 1em;
 

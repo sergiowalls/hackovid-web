@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Divider, EditableText, Intent } from '@blueprintjs/core'
+import { Button, Card, Divider, EditableText, Intent, TagInput } from '@blueprintjs/core'
 import { Elevation } from '@blueprintjs/core/lib/esm/common/elevation'
 
 import { EditableClassSection } from '../EditableClassSection/EditableClassSection'
@@ -12,6 +12,7 @@ const EditableClass = () => {
   const [ nextSectionId, setNextSectionId ] = useState<number>(0)
   const [ sections, setSections ] = useState<ClassSection[]>([])
   const [ title, setTitle ] = useState<string>('')
+  const [ tags, setTags ] = useState<string[]>([])
 
   useEffect(() => {
     addSection()
@@ -49,7 +50,18 @@ const EditableClass = () => {
           />
         </div>
         <Divider />
-        Tags
+        <div className="editable-class__tags">
+          <div className="editable-class__tags__label">
+            Tags
+          </div>
+          <div className="editable-class__tags__input-wrapper">
+            <TagInput
+              values={tags}
+              onAdd={values => setTags([...tags, ...values])}
+              fill={true}
+            />
+          </div>
+        </div>
       </Card>
 
       <h2 className="editable-class__part-title">Seccions</h2>
