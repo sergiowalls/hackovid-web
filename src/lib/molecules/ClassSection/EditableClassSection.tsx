@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import CKEditor from '@ckeditor/ckeditor5-react'
 // @ts-ignore
@@ -18,27 +18,26 @@ interface CKEditorEditorInterface {
 
 interface EditableClassSection {
   section: ClassSection
-  onBlur: (section: ClassSection) => void
+  onChange: (section: ClassSection) => void
 }
 
 const EditableClassSection = ({
   section,
-  onBlur
+  onChange
 }: EditableClassSection) => {
   const [titleData, setTitleData] = useState<string>(section.title)
   const [contentData, setContentData] = useState<string>(section.htmlContent)
 
-  const handleOnBlur = () => {
-    onBlur({
+  useEffect(() => {
+    onChange({
       title: titleData,
       htmlContent: contentData
     })
-  }
+  }, [onChange, titleData, contentData])
 
   return (
     <Card
       className="editable-class-section"
-      onBlur={handleOnBlur}
       elevation={Elevation.TWO}
     >
       <div className="editable-class-section__title">

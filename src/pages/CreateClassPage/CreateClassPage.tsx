@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
+import { Button, EditableText } from '@blueprintjs/core'
 
 import { EditableClassSection } from '../../lib/molecules/ClassSection/EditableClassSection'
 import { Container } from '../../lib/atoms/Container/Container'
 import { ClassSection } from '../../model/ClassSection'
-import { Button } from '@blueprintjs/core'
 
 import './CreateClassPage.scss'
 
 const CreateClassPage = () => {
   const [ sections, setSections ] = useState<ClassSection[]>([])
+  const [ title, setTitle ] = useState<string>('')
 
   const updateSection = (index: number, section: ClassSection) => {
-
+    setSections(sections.map((currentSection, currentIndex) => {
+      if (index === currentIndex) {
+        return section
+      }
+      return currentSection
+    }))
   }
 
   const addSection = () => {
@@ -20,13 +26,20 @@ const CreateClassPage = () => {
 
   return (
     <Container className="create-class">
-      <h1>Nova classe</h1>
+      <div className="create-class__title">
+        <EditableText
+          placeholder="Títol de la classe..."
+          value={title}
+          onChange={setTitle}
+          className="create-class__title__editable"
+        />
+      </div>
 
       {sections.map((section, index) => (
         <div className="create-class__section">
           <EditableClassSection
             section={section}
-            onBlur={(section) => updateSection(index, section)}
+            onChange={(section) => updateSection(index, section)}
           />
         </div>
       ))}
