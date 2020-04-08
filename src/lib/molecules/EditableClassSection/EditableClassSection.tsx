@@ -41,7 +41,7 @@ const EditableClassSection = ({
   return (
     <Card
       className="editable-class-section"
-      elevation={Elevation.TWO}
+      elevation={Elevation.ONE}
     >
       <div className="editable-class-section__header">
         <div className="editable-class-section__title">

@@ -10,37 +10,6 @@
     background-color: $background-color;
     height: calc(100vh - 50px);
     overflow: auto;
-
-    .create-class__editable {
-      .create-class__editable__part-title {
-        margin-top: 2em;
-      }
-
-      .create-class__title {
-        margin-bottom: 1.5em;
-
-        .create-class__title__editable {
-          font-size: 24px;
-          font-weight: bold;
-
-          padding: 4px 8px;
-        }
-      }
-
-      .create-class__section {
-        margin-top: 1em;
-
-        .create-class__section__delete {
-          cursor: pointer;
-
-          padding: 0.2em;
-        }
-      }
-
-      .create-class__actions {
-        margin-top: 2em;
-      }
-    }
   }
 
   .create-class__favorites-column {
