@@ -18,6 +18,7 @@ import { store } from './store'
 
 import './App.scss'
 import { MyClassesPage } from './pages/MyClassesPage/MyClassesPage'
+import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
 
 FocusStyleManager.onlyShowFocusOnTabs()
 
@@ -41,7 +42,7 @@ const App = () => {
             <HomePage />
           </Route>
           <Route>
-            <div>Not found :(</div>
+            <NotFoundPage />
           </Route>
         </Switch>
       </Router>
