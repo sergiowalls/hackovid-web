@@ -9,6 +9,7 @@ import { Col } from '../../lib/atoms/Col/Col'
 
 import './CreateClassPage.scss'
 import { Page } from '../../lib/molecules/Page/Page'
+import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 
 const CreateClassPage = () => {
   const [ nextSectionId, setNextSectionId ] = useState<number>(0)
@@ -39,7 +40,7 @@ const CreateClassPage = () => {
 
   const renderEditableArea = () => {
     return (
-      <Page className="create-class__editable">
+      <SafePageView className="create-class__editable">
         <div className="create-class__title">
           <EditableText
             placeholder="Títol de la classe..."
@@ -74,29 +75,31 @@ const CreateClassPage = () => {
             intent={Intent.PRIMARY}
           >Afegir secció</Button>
         </div>
-      </Page>
+      </SafePageView>
     )
   }
 
   const renderFavoritesArea = () => {
     return (
-      <div className="create-class__favorites">
+      <SafePageView className="create-class__favorites">
         <h1>Seccions guardades</h1>
-      </div>
+      </SafePageView>
     )
   }
 
   return (
-    <Container className="create-class">
-      <Row>
-        <Col md={8} className="create-class__editable-column">
-          {renderEditableArea()}
-        </Col>
-        <Col md={4} className="create-class__favorites-column">
-          {renderFavoritesArea()}
-        </Col>
-      </Row>
-    </Container>
+    <Page>
+      <Container className="create-class">
+        <Row>
+          <Col md={8} className="create-class__editable-column">
+            {renderEditableArea()}
+          </Col>
+          <Col md={4} className="create-class__favorites-column">
+            {renderFavoritesArea()}
+          </Col>
+        </Row>
+      </Container>
+    </Page>
   )
 }
 
