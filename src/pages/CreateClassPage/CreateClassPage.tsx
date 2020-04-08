@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Container } from '../../lib/atoms/Container/Container'
 import { Row } from '../../lib/atoms/Row/Row'
 import { Col } from '../../lib/atoms/Col/Col'
 import { Page } from '../../lib/molecules/Page/Page'
 import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
+import { EditableClass } from '../../lib/molecules/EditableClass/EditableClass'
+import { Class } from '../../model/Class'
 
 import './CreateClassPage.scss'
-import { EditableClass } from '../../lib/molecules/EditableClass/EditableClass'
 
 const CreateClassPage = () => {
+  const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew())
+
   const renderFavoritesArea = () => {
     return (
       <SafePageView>
@@ -23,7 +26,10 @@ const CreateClassPage = () => {
       <Container leftMarginClass="create-class__container__left-margin">
         <Row>
           <Col md={8} className="create-class__editable-column">
-            <EditableClass />
+            <EditableClass
+              classEntity={classEntity}
+              onChange={setClassEntity}
+            />
           </Col>
           <Col md={4} className="create-class__favorites-column">
             {renderFavoritesArea()}

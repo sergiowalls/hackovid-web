@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Divider, EditableText, Intent, TagInput } from '@blueprintjs/core'
-import { Elevation } from '@blueprintjs/core/lib/esm/common/elevation'
+import { Button, Intent } from '@blueprintjs/core'
 
 import { EditableClassSection } from '../EditableClassSection/EditableClassSection'
 import { SafePageView } from '../SafePageView/SafePageView'
@@ -9,15 +8,33 @@ import { EditableClassHeader } from '../EditableClassHeader/EditableClassHeader'
 import { ClassHeader } from '../../../model/ClassHeader'
 
 import './EditableClass.scss'
+import { Class } from '../../../model/Class'
 
-const EditableClass = () => {
-  const [ header, setHeader ] = useState<ClassHeader>(new ClassHeader('', []))
-  const [ nextSectionId, setNextSectionId ] = useState<number>(0)
-  const [ sections, setSections ] = useState<ClassSection[]>([])
+interface EditableClassProps {
+  classEntity: Class
+  onChange: (classEntity: Class) => void
+}
+
+const EditableClass = ({
+  classEntity,
+  onChange
+}: EditableClassProps) => {
+  const [ header, setHeader ] = useState<ClassHeader>(classEntity.header)
+  const [ sections, setSections ] = useState<ClassSection[]>(classEntity.sections)
 
   useEffect(() => {
-    addSection()
-  }, [])
+    onChange(new Class(header, sections))
+  }, [header, sections])
+
+  const getNextSectionId = () => {
+    let maxSectionId = 0
+
+    sections.forEach(section => {
+      if (section.id > maxSectionId) maxSectionId = section.id
+    })
+
+    return maxSectionId + 1
+  }
 
   const updateSection = (section: ClassSection) => {
     setSections(sections.map((currentSection) => {
@@ -29,8 +46,7 @@ const EditableClass = () => {
   }
 
   const addSection = () => {
-    setSections([...sections, new ClassSection(nextSectionId, '', '' )])
-    setNextSectionId(nextSectionId + 1)
+    setSections([...sections, new ClassSection(getNextSectionId(), '', '' )])
   }
 
   const deleteSection = (section: ClassSection) => {
