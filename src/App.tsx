@@ -31,11 +31,11 @@ const App = () => {
           <Route path="/login">
             <LoginPage />
           </Route>
-          <Route path="/classes">
-            <MyClassesPage />
-          </Route>
           <Route path="/classes/new">
             <CreateClassPage />
+          </Route>
+          <Route path="/classes">
+            <MyClassesPage />
           </Route>
           <Route path="/">
             <HomePage />

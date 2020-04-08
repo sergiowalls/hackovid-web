@@ -16,12 +16,18 @@ export interface AuthEvents {
 }
 
 export const auth: StoreonModule<AuthState, AuthEvents> = (store: StoreonStore) => {
-  store.on('@init', (): AuthState => ({
-    isAuthenticated: false,
-    error: undefined
-  }))
+  store.on('@init', (): AuthState => {
+    const isAuthenticated = localStorage.getItem('authenticated') !== null
+
+    return {
+      isAuthenticated,
+      error: undefined
+    }
+  })
 
   store.on('login', (): AuthState => {
+    localStorage.setItem('authenticated', 'true')
+
     return {
       isAuthenticated: true,
       error: undefined
@@ -29,6 +35,7 @@ export const auth: StoreonModule<AuthState, AuthEvents> = (store: StoreonStore) 
   })
 
   store.on('logout', (): AuthState => {
+    localStorage.getItem('authenticated')
     return {
       isAuthenticated: false,
       error: undefined
