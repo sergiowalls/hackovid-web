@@ -6,6 +6,24 @@ import { ClassHeader } from '../../../model/ClassHeader'
 
 import './EditableClassHeader.scss'
 
+interface InputWrapperProps {
+  label?: string
+  children?: any
+}
+
+const InputWrapper = ({ children, label }: InputWrapperProps) => {
+  return (
+    <div className="editable-class-header__part">
+      <div className="editable-class-header__part__label">
+        {label}
+      </div>
+      <div className="editable-class-header__part__input-wrapper">
+        {children}
+      </div>
+    </div>
+  )
+}
+
 interface EditableClassHeaderProps {
   header: ClassHeader
   onChange: (header: ClassHeader) => void
@@ -32,19 +50,21 @@ const EditableClassHeader = ({
           className="editable-class-header__title__editable"
         />
       </div>
+
       <Divider className="editable-class-header__divider" />
-      <div className="editable-class-header__part editable-class-header__tags">
-        <div className="editable-class-header__tags__label">
-          Tags
-        </div>
-        <div className="editable-class-header__tags__input-wrapper">
-          <TagInput
-            values={tags}
-            onAdd={values => setTags([...tags, ...values])}
-            fill={true}
-          />
-        </div>
-      </div>
+
+      <InputWrapper label="Curs">
+        Curs
+      </InputWrapper>
+
+      <InputWrapper label="Tags">
+        <TagInput
+          values={tags}
+          onAdd={values => setTags([...tags, ...values])}
+          fill={true}
+        />
+      </InputWrapper>
+
     </Card>
   )
 }

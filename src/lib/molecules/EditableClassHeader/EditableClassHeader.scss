@@ -10,19 +10,22 @@
     }
   }
 
-  .editable-class-header__part {
-    margin-top: 1em;
+  .editable-class-header__divider {
+    width: 100%;
+    margin: 0;
   }
 
-  .editable-class-header__tags {
+  .editable-class-header__part {
+    margin-top: 1em;
     display: flex;
     align-items: center;
 
-    .editable-class-header__tags__label {
-      padding-right: 5px;
+    .editable-class-header__part__label {
+      padding-left: 1em;
+      width: 130px;
     }
 
-    .editable-class-header__tags__input-wrapper {
+    .editable-class-header__part__input-wrapper {
       padding-left: 5px;
       flex: 1;
     }
