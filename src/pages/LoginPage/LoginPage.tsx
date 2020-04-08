@@ -1,5 +1,7 @@
 import React from 'react'
 import { useStoreon } from 'storeon/react'
+import { Button } from '@blueprintjs/core'
+import { useHistory } from 'react-router-dom'
 
 import { AuthEvents, AuthState } from '../../store/auth'
 import { PublicPage } from '../../lib/molecules/PublicPage/PublicPage'
@@ -7,6 +9,7 @@ import { Container } from '../../lib/atoms/Container/Container'
 import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 
 const LoginPage = () => {
+  const history = useHistory()
   const { dispatch, error } = useStoreon<AuthState, AuthEvents>('error', 'isAuthenticated')
 
   const handleOnLoginClick = () => {
@@ -20,7 +23,8 @@ const LoginPage = () => {
           <div>
             Login Page
           </div>
-          <button onClick={handleOnLoginClick}>Login</button>
+          <Button onClick={handleOnLoginClick}>Entrar</Button>
+          <Button onClick={() => history.push('/register')}>Registra't</Button>
           <div>
             {error}
           </div>

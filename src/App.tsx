@@ -2,7 +2,8 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom'
 import { StoreContext } from 'storeon/react'
 import '@ckeditor/ckeditor5-build-inline/build/translations/ca'
@@ -19,6 +20,7 @@ import { store } from './store'
 import './App.scss'
 import { MyClassesPage } from './pages/MyClassesPage/MyClassesPage'
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
+import { RegisterPage } from './pages/RegisterPage/RegisterPage'
 
 FocusStyleManager.onlyShowFocusOnTabs()
 
@@ -32,6 +34,9 @@ const App = () => {
           <Route exact path="/login">
             <LoginPage />
           </Route>
+          <Route exact path="/register">
+            <RegisterPage />
+          </Route>
           <Route exact path="/classes/new">
             <CreateClassPage />
           </Route>
@@ -41,8 +46,11 @@ const App = () => {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route>
+          <Route exact path="/404">
             <NotFoundPage />
+          </Route>
+          <Route>
+            <Redirect to="/404" />
           </Route>
         </Switch>
       </Router>

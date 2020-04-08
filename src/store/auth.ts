@@ -35,7 +35,7 @@ export const auth: StoreonModule<AuthState, AuthEvents> = (store: StoreonStore) 
   })
 
   store.on('logout', (): AuthState => {
-    localStorage.getItem('authenticated')
+    localStorage.removeItem('authenticated')
     return {
       isAuthenticated: false,
       error: undefined
