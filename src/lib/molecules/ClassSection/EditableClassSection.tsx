@@ -19,17 +19,20 @@ interface CKEditorEditorInterface {
 interface EditableClassSection {
   section: ClassSection
   onChange: (section: ClassSection) => void
+  renderRight?: any
 }
 
 const EditableClassSection = ({
   section,
-  onChange
+  onChange,
+  renderRight
 }: EditableClassSection) => {
   const [titleData, setTitleData] = useState<string>(section.title)
   const [contentData, setContentData] = useState<string>(section.htmlContent)
 
   useEffect(() => {
     onChange({
+      id: section.id,
       title: titleData,
       htmlContent: contentData
     })
@@ -40,13 +43,19 @@ const EditableClassSection = ({
       className="editable-class-section"
       elevation={Elevation.TWO}
     >
-      <div className="editable-class-section__title">
-        <EditableText
-          placeholder="Introdueix un títol..."
-          value={titleData}
-          onChange={setTitleData}
-          className="editable-class-section__title__editable"
-        />
+      <div className="editable-class-section__header">
+        <div className="editable-class-section__title">
+          <EditableText
+            placeholder="Introdueix un títol..."
+            value={titleData}
+            onChange={setTitleData}
+            className="editable-class-section__title__editable"
+          />
+        </div>
+
+        <div className="editable-class-section__header__right">
+          {renderRight}
+        </div>
       </div>
       <div className="editable-class-section__editor">
         <CKEditor

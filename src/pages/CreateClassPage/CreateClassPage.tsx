@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, EditableText } from '@blueprintjs/core'
+import React, { useEffect, useState } from 'react'
+import { Button, EditableText, Icon, Intent } from '@blueprintjs/core'
 
 import { EditableClassSection } from '../../lib/molecules/ClassSection/EditableClassSection'
 import { Container } from '../../lib/atoms/Container/Container'
@@ -8,12 +8,17 @@ import { ClassSection } from '../../model/ClassSection'
 import './CreateClassPage.scss'
 
 const CreateClassPage = () => {
+  const [ nextSectionId, setNextSectionId ] = useState<number>(0)
   const [ sections, setSections ] = useState<ClassSection[]>([])
   const [ title, setTitle ] = useState<string>('')
 
-  const updateSection = (index: number, section: ClassSection) => {
-    setSections(sections.map((currentSection, currentIndex) => {
-      if (index === currentIndex) {
+  useEffect(() => {
+    addSection()
+  }, [])
+
+  const updateSection = (section: ClassSection) => {
+    setSections(sections.map((currentSection) => {
+      if (section.id === currentSection.id) {
         return section
       }
       return currentSection
@@ -21,7 +26,12 @@ const CreateClassPage = () => {
   }
 
   const addSection = () => {
-    setSections([...sections, { title: '', htmlContent: '' }])
+    setSections([...sections, { id: nextSectionId, title: '', htmlContent: '' }])
+    setNextSectionId(nextSectionId + 1)
+  }
+
+  const deleteSection = (section: ClassSection) => {
+    setSections(sections.filter((currentSection) => currentSection.id !== section.id))
   }
 
   return (
@@ -35,17 +45,30 @@ const CreateClassPage = () => {
         />
       </div>
 
-      {sections.map((section, index) => (
-        <div className="create-class__section" key={`editable-section-${index}`}>
+      {sections.map((section) => (
+        <div className="create-class__section" key={`editable-section-${section.id}`}>
           <EditableClassSection
+            renderRight={(
+              <Button
+                icon="trash"
+                intent={Intent.DANGER}
+                onClick={() => deleteSection(section)}
+              >
+                Esborrar secció
+              </Button>
+            )}
             section={section}
-            onChange={(section) => updateSection(index, section)}
+            onChange={updateSection}
           />
         </div>
       ))}
 
       <div className="create-class__actions">
-        <Button onClick={addSection}>Afegir secció</Button>
+        <Button
+          onClick={addSection}
+          icon="plus"
+          intent={Intent.PRIMARY}
+        >Afegir secció</Button>
       </div>
     </Container>
   )
