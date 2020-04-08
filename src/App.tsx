@@ -28,16 +28,16 @@ const App = () => {
         <AppNavigation />
 
         <Switch>
-          <Route path="/login">
+          <Route exact path="/login">
             <LoginPage />
           </Route>
-          <Route path="/classes/new">
+          <Route exact path="/classes/new">
             <CreateClassPage />
           </Route>
-          <Route path="/classes">
+          <Route exact path="/classes">
             <MyClassesPage />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <HomePage />
           </Route>
           <Route>
