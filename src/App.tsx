@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/login">
             <LoginPage />
           </Route>
-          <Route path="/classes/create">
+          <Route path="/classes/new">
             <CreateClassPage />
           </Route>
           <Route exact path="/">
