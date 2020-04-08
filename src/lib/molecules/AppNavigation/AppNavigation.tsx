@@ -1,15 +1,14 @@
 import React from 'react'
 import { Alignment, Button, Intent, Navbar } from '@blueprintjs/core'
-import { useHistory } from 'react-router-dom'
 import { useStoreon } from 'storeon/react'
 
 import { Container } from '../../atoms/Container/Container'
 import { AuthEvents, AuthState } from '../../../store/auth'
+import { AppMenuItem } from '../AppMenuItem/AppMenuItem'
 
 import './AppNavigation.scss'
 
 const AppNavigation = () => {
-  const history = useHistory()
   const { dispatch, isAuthenticated } = useStoreon<AuthState, AuthEvents>('isAuthenticated')
 
   if (!isAuthenticated) {
@@ -24,27 +23,19 @@ const AppNavigation = () => {
 
           <Navbar.Divider />
 
-          <Button
-            minimal={true}
-            icon="home"
-            onClick={() => history.push('/')}
-          >
+          <AppMenuItem icon="home" path="/">
             Inici
-          </Button>
-          <Button
-            minimal={true}
-            icon="inbox"
-            onClick={() => history.push('/classes')}
-          >
+          </AppMenuItem>
+          <AppMenuItem icon="inbox" path="/classes">
             Classes
-          </Button>
+          </AppMenuItem>
         </Navbar.Group>
 
         <Navbar.Group align={Alignment.RIGHT}>
           <Button
             minimal={true}
             intent={Intent.DANGER}
-            rightIcon="log-out"
+            icon="log-out"
             onClick={() => dispatch('logout')}
           >
             Sortir
