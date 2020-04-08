@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Button, EditableText, Icon, Intent } from '@blueprintjs/core'
+import { Button, EditableText, Intent } from '@blueprintjs/core'
 
 import { EditableClassSection } from '../../lib/molecules/ClassSection/EditableClassSection'
 import { Container } from '../../lib/atoms/Container/Container'
 import { ClassSection } from '../../model/ClassSection'
-
-import './CreateClassPage.scss'
 import { Row } from '../../lib/atoms/Row/Row'
 import { Col } from '../../lib/atoms/Col/Col'
+
+import './CreateClassPage.scss'
+import { Page } from '../../lib/molecules/Page/Page'
 
 const CreateClassPage = () => {
   const [ nextSectionId, setNextSectionId ] = useState<number>(0)
@@ -38,7 +39,7 @@ const CreateClassPage = () => {
 
   const renderEditableArea = () => {
     return (
-      <div className="create-class__editable">
+      <Page className="create-class__editable">
         <div className="create-class__title">
           <EditableText
             placeholder="Títol de la classe..."
@@ -73,7 +74,7 @@ const CreateClassPage = () => {
             intent={Intent.PRIMARY}
           >Afegir secció</Button>
         </div>
-      </div>
+      </Page>
     )
   }
 

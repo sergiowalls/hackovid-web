@@ -1,6 +1,7 @@
 import { StoreonModule, StoreonStore } from 'storeon'
 
 export interface AuthState {
+  isAuthenticated: boolean
   error?: string
 }
 
@@ -15,10 +16,14 @@ export interface AuthEvents {
 
 export const auth: StoreonModule<AuthState, AuthEvents> = (store: StoreonStore) => {
   store.on('@init', (): AuthState => ({
+    isAuthenticated: false,
     error: undefined
   }))
 
   store.on('login', (state, event): AuthState => {
-    return { error: 'Error calling API for login' }
+    return {
+      isAuthenticated: true,
+      error: undefined
+    }
   })
 }

@@ -7,18 +7,25 @@ import {
 import { StoreContext } from 'storeon/react'
 import '@ckeditor/ckeditor5-build-inline/build/translations/ca'
 
-import { LandingPage } from './pages/LandingPage/LandingPage'
+import { FocusStyleManager } from '@blueprintjs/core'
+
 import { LoginPage } from './pages/LoginPage/LoginPage'
 import { CreateClassPage } from './pages/CreateClassPage/CreateClassPage'
+import { AppNavigation } from './lib/molecules/AppNavigation/AppNavigation'
+import { HomePage } from './pages/HomePage/HomePage'
 
 import { store } from './store'
 
 import './App.scss'
 
+FocusStyleManager.onlyShowFocusOnTabs()
+
 const App = () => {
   return (
     <StoreContext.Provider value={store}>
       <Router>
+        <AppNavigation />
+
         <Switch>
           <Route path="/login">
             <LoginPage />
@@ -26,8 +33,8 @@ const App = () => {
           <Route path="/classes/new">
             <CreateClassPage />
           </Route>
-          <Route exact path="/">
-            <LandingPage />
+          <Route path="/">
+            <HomePage />
           </Route>
           <Route>
             <div>Not found :(</div>
