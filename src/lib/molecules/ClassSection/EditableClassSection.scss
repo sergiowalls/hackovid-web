@@ -1,12 +1,24 @@
 
 .editable-class-section {
+
+  background: rgba(0, 0, 0, 0.03) !important;
+
+  .editable-class-section__title {
+    margin-left: 1em;
+
+    .editable-class-section__title__editable {
+      font-size: 20px;
+      font-weight: bold;
+      padding: 4px 10px;
+    }
+  }
+
   .editable-class-section__editor {
+    margin-top: 1em;
+
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 2px;
 
-    .ck-focused {
-      outline: none;
-      border: none;
-    }
+    background-color: white;
   }
 }

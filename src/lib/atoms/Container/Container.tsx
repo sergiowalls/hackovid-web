@@ -1,16 +1,18 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 import './Container.scss'
 
 interface ContainerProps {
-  children?: null | ReactElement | string | (null | ReactElement | string)[]
+  children?: any
+  className?: string
 }
 
 const Container = ({
-  children
+  children,
+  className
 }: ContainerProps) => {
   return (
-    <div className="container">
+    <div className={`container ${className}`}>
       {children}
     </div>
   )

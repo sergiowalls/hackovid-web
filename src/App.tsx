@@ -5,16 +5,15 @@ import {
   Route
 } from 'react-router-dom'
 import { StoreContext } from 'storeon/react'
+import '@ckeditor/ckeditor5-build-inline/build/translations/ca'
 
 import { LandingPage } from './pages/LandingPage/LandingPage'
 import { LoginPage } from './pages/LoginPage/LoginPage'
+import { CreateClassPage } from './pages/CreateClassPage/CreateClassPage'
 
 import { store } from './store'
 
-import '@ckeditor/ckeditor5-build-inline/build/translations/ca'
-
 import './App.scss'
-import { CreateClassPage } from './pages/CreateClassPage/CreateClassPage'
 
 const App = () => {
   return (

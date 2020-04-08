@@ -3,33 +3,63 @@ import React, { useState } from 'react'
 import CKEditor from '@ckeditor/ckeditor5-react'
 // @ts-ignore
 import InlineEditor from '@ckeditor/ckeditor5-build-inline'
+import { Card, EditableText, Elevation } from '@blueprintjs/core'
+
+import { ClassSection } from '../../../model/ClassSection'
 
 import './EditableClassSection.scss'
 
+interface CKEditorEditorInterface {
+  getData: () => string
+  keystrokes: {
+    set: (key: string | (string | number)[], handler: (keyEvtData: any, cancel: any) => void) => void
+  }
+}
+
 interface EditableClassSection {
-  onBlur: (htmlContent: string) => void
+  section: ClassSection
+  onBlur: (section: ClassSection) => void
 }
 
 const EditableClassSection = ({
+  section,
   onBlur
 }: EditableClassSection) => {
-  const [data, setData] = useState<string>('')
+  const [titleData, setTitleData] = useState<string>(section.title)
+  const [contentData, setContentData] = useState<string>(section.htmlContent)
+
+  const handleOnBlur = () => {
+    onBlur({
+      title: titleData,
+      htmlContent: contentData
+    })
+  }
 
   return (
-    <div className="editable-class-section">
-      <h3>Section</h3>
+    <Card
+      className="editable-class-section"
+      onBlur={handleOnBlur}
+      elevation={Elevation.TWO}
+    >
+      <div className="editable-class-section__title">
+        <EditableText
+          placeholder="Introdueix un títol..."
+          value={titleData}
+          onChange={setTitleData}
+          className="editable-class-section__title__editable"
+        />
+      </div>
       <div className="editable-class-section__editor">
         <CKEditor
           config={{ language: 'ca' }}
           editor={InlineEditor}
-          data={data}
-          onChange={(event: any, editor: { getData: () => string }) => {
-            setData(editor.getData())
+          data={contentData}
+          onChange={(event: any, editor: CKEditorEditorInterface) => {
+            setContentData(editor.getData())
           }}
-          onBlur={() => onBlur(data)}
         />
       </div>
-    </div>
+    </Card>
   )
 }
 
