@@ -36,7 +36,7 @@ const CreateClassPage = () => {
       </div>
 
       {sections.map((section, index) => (
-        <div className="create-class__section">
+        <div className="create-class__section" key={`editable-section-${index}`}>
           <EditableClassSection
             section={section}
             onChange={(section) => updateSection(index, section)}

@@ -33,7 +33,7 @@ const EditableClassSection = ({
       title: titleData,
       htmlContent: contentData
     })
-  }, [onChange, titleData, contentData])
+  }, [titleData, contentData])
 
   return (
     <Card
