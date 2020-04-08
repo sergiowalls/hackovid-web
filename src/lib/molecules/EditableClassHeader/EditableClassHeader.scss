@@ -1,0 +1,30 @@
+.editable-class-header {
+  .editable-class-header__title {
+    margin-bottom: 1.5em;
+
+    .editable-class-header__title__editable {
+      font-size: 24px;
+      font-weight: bold;
+
+      padding: 4px 8px;
+    }
+  }
+
+  .editable-class-header__part {
+    margin-top: 1em;
+  }
+
+  .editable-class-header__tags {
+    display: flex;
+    align-items: center;
+
+    .editable-class-header__tags__label {
+      padding-right: 5px;
+    }
+
+    .editable-class-header__tags__input-wrapper {
+      padding-left: 5px;
+      flex: 1;
+    }
+  }
+}

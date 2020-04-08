@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Elevation } from '@blueprintjs/core/lib/esm/common/elevation'
 import { Card, Divider, EditableText, TagInput } from '@blueprintjs/core'
+
 import { ClassHeader } from '../../../model/ClassHeader'
+
+import './EditableClassHeader.scss'
 
 interface EditableClassHeaderProps {
   header: ClassHeader
@@ -20,21 +23,21 @@ const EditableClassHeader = ({
   }, [title, tags])
 
   return (
-    <Card elevation={Elevation.ONE}>
-      <div className="editable-class__title">
+    <Card elevation={Elevation.ONE} className="editable-class-header">
+      <div className="editable-class-header__title">
         <EditableText
           placeholder="Títol de la classe..."
           value={title}
           onChange={setTitle}
-          className="editable-class__title__editable"
+          className="editable-class-header__title__editable"
         />
       </div>
-      <Divider />
-      <div className="editable-class__tags">
-        <div className="editable-class__tags__label">
+      <Divider className="editable-class-header__divider" />
+      <div className="editable-class-header__part editable-class-header__tags">
+        <div className="editable-class-header__tags__label">
           Tags
         </div>
-        <div className="editable-class__tags__input-wrapper">
+        <div className="editable-class-header__tags__input-wrapper">
           <TagInput
             values={tags}
             onAdd={values => setTags([...tags, ...values])}
