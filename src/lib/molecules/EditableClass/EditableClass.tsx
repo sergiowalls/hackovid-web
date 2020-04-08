@@ -5,14 +5,15 @@ import { Elevation } from '@blueprintjs/core/lib/esm/common/elevation'
 import { EditableClassSection } from '../EditableClassSection/EditableClassSection'
 import { SafePageView } from '../SafePageView/SafePageView'
 import { ClassSection } from '../../../model/ClassSection'
+import { EditableClassHeader } from '../EditableClassHeader/EditableClassHeader'
+import { ClassHeader } from '../../../model/ClassHeader'
 
 import './EditableClass.scss'
 
 const EditableClass = () => {
+  const [ header, setHeader ] = useState<ClassHeader>(new ClassHeader('', []))
   const [ nextSectionId, setNextSectionId ] = useState<number>(0)
   const [ sections, setSections ] = useState<ClassSection[]>([])
-  const [ title, setTitle ] = useState<string>('')
-  const [ tags, setTags ] = useState<string[]>([])
 
   useEffect(() => {
     addSection()
@@ -28,7 +29,7 @@ const EditableClass = () => {
   }
 
   const addSection = () => {
-    setSections([...sections, { id: nextSectionId, title: '', htmlContent: '' }])
+    setSections([...sections, new ClassSection(nextSectionId, '', '' )])
     setNextSectionId(nextSectionId + 1)
   }
 
@@ -40,29 +41,10 @@ const EditableClass = () => {
     <SafePageView className="editable-class">
       <h2>Nova classe</h2>
 
-      <Card elevation={Elevation.ONE}>
-        <div className="editable-class__title">
-          <EditableText
-            placeholder="Títol de la classe..."
-            value={title}
-            onChange={setTitle}
-            className="editable-class__title__editable"
-          />
-        </div>
-        <Divider />
-        <div className="editable-class__tags">
-          <div className="editable-class__tags__label">
-            Tags
-          </div>
-          <div className="editable-class__tags__input-wrapper">
-            <TagInput
-              values={tags}
-              onAdd={values => setTags([...tags, ...values])}
-              fill={true}
-            />
-          </div>
-        </div>
-      </Card>
+      <EditableClassHeader
+        header={header}
+        onChange={setHeader}
+      />
 
       <h2 className="editable-class__part-title">Seccions</h2>
 

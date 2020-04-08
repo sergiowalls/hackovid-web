@@ -1,6 +1,10 @@
 
-export interface ClassSection {
-  id: number,
-  title: string
-  htmlContent: string
+class ClassSection {
+  constructor(
+    public id: number,
+    public title: string,
+    public htmlContent: string
+  ) {}
 }
+
+export { ClassSection }

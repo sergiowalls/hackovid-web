@@ -31,11 +31,11 @@ const EditableClassSection = ({
   const [contentData, setContentData] = useState<string>(section.htmlContent)
 
   useEffect(() => {
-    onChange({
-      id: section.id,
-      title: titleData,
-      htmlContent: contentData
-    })
+    onChange(new ClassSection(
+      section.id,
+      titleData,
+      contentData
+    ))
   }, [titleData, contentData])
 
   return (
