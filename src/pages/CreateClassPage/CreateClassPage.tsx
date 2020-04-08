@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Button, EditableText, Intent } from '@blueprintjs/core'
+import { Button, EditableText, Intent, Card, Divider } from '@blueprintjs/core'
 
 import { EditableClassSection } from '../../lib/molecules/ClassSection/EditableClassSection'
 import { Container } from '../../lib/atoms/Container/Container'
 import { ClassSection } from '../../model/ClassSection'
 import { Row } from '../../lib/atoms/Row/Row'
 import { Col } from '../../lib/atoms/Col/Col'
-
-import './CreateClassPage.scss'
 import { Page } from '../../lib/molecules/Page/Page'
 import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
+
+import './CreateClassPage.scss'
 
 const CreateClassPage = () => {
   const [ nextSectionId, setNextSectionId ] = useState<number>(0)
@@ -41,14 +41,22 @@ const CreateClassPage = () => {
   const renderEditableArea = () => {
     return (
       <SafePageView className="create-class__editable">
-        <div className="create-class__title">
-          <EditableText
-            placeholder="Títol de la classe..."
-            value={title}
-            onChange={setTitle}
-            className="create-class__title__editable"
-          />
-        </div>
+        <h2>Nova classe</h2>
+
+        <Card>
+          <div className="create-class__title">
+            <EditableText
+              placeholder="Títol de la classe..."
+              value={title}
+              onChange={setTitle}
+              className="create-class__title__editable"
+            />
+          </div>
+          <Divider />
+          Tags
+        </Card>
+
+        <h2 className="create-class__editable__part-title">Seccions</h2>
 
         {sections.map((section) => (
           <div className="create-class__section" key={`editable-section-${section.id}`}>
@@ -75,21 +83,23 @@ const CreateClassPage = () => {
             intent={Intent.PRIMARY}
           >Afegir secció</Button>
         </div>
+
+        <h2 className="create-class__editable__part-title">Recursos</h2>
       </SafePageView>
     )
   }
 
   const renderFavoritesArea = () => {
     return (
-      <SafePageView className="create-class__favorites">
+      <SafePageView>
         <h2>Seccions guardades</h2>
       </SafePageView>
     )
   }
 
   return (
-    <Page>
-      <Container className="create-class">
+    <Page className="create-class">
+      <Container leftMarginClass="create-class__container__left-margin">
         <Row>
           <Col md={8} className="create-class__editable-column">
             {renderEditableArea()}

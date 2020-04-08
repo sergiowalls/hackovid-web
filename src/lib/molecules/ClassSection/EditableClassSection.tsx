@@ -46,7 +46,7 @@ const EditableClassSection = ({
       <div className="editable-class-section__header">
         <div className="editable-class-section__title">
           <EditableText
-            placeholder="Introdueix un títol..."
+            placeholder="Títol de la secció..."
             value={titleData}
             onChange={setTitleData}
             className="editable-class-section__title__editable"

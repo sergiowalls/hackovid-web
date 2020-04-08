@@ -1,11 +1,22 @@
+@import '../../lib/styles/variables';
+
 .create-class {
 
+  .create-class__container__left-margin {
+    background-color: $background-color;
+  }
+
   .create-class__editable-column {
-    min-height: 100vh;
+    background-color: $background-color;
+    height: calc(100vh - 50px);
+    overflow: auto;
 
     .create-class__editable {
-      .create-class__title {
+      .create-class__editable__part-title {
         margin-top: 2em;
+      }
+
+      .create-class__title {
         margin-bottom: 1.5em;
 
         .create-class__title__editable {
@@ -34,10 +45,7 @@
 
   .create-class__favorites-column {
     border-left: 1px solid rgba(0, 0, 0, 0.1);
-    min-height: 100vh;
-
-    .create-class__favorites {
-
-    }
+    height: calc(100vh - 50px);
+    overflow: auto;
   }
 }
