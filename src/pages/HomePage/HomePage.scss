@@ -1,0 +1,21 @@
+@import '../../lib/styles/variables';
+
+.home-page {
+  display: flex;
+
+  .home-page__container__right-margin {
+    background-color: $background-color;
+  }
+
+  .home-page__filters-column {
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    min-height: 100vh;
+  }
+
+  .home-page__classes-column {
+    min-height: 100vh;
+
+    background-color: $background-color;
+  }
+}

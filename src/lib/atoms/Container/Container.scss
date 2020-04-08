@@ -1,20 +1,36 @@
 
 @import "../../styles/variables";
 
-.container {
+.container-wapper {
   width: 100%;
-  margin: 0 auto;
+  display: flex;
 
-  @media (min-width: map_get($breakpoints, 'sm')) {
-    width: 550px;
+  .container {
+    width: 100%;
+
+    @media (min-width: map_get($breakpoints, 'sm')) {
+      width: 550px;
+    }
+    @media (min-width: map_get($breakpoints, 'md')) {
+      width: 840px;
+    }
+    @media (min-width: map_get($breakpoints, 'lg')) {
+      width: 1000px;
+    }
+    @media (min-width: map_get($breakpoints, 'xl')) {
+      width: 1300px;
+    }
   }
-  @media (min-width: map_get($breakpoints, 'md')) {
-    width: 840px;
+
+  .container-fluid {
+    width: 100%;
   }
-  @media (min-width: map_get($breakpoints, 'lg')) {
-    width: 1000px;
+
+  .container__margin__left {
+    flex: 1;
   }
-  @media (min-width: map_get($breakpoints, 'xl')) {
-    width: 1300px;
+
+  .container__margin__right {
+    flex: 1;
   }
 }

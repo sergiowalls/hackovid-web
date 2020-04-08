@@ -82,7 +82,7 @@ const CreateClassPage = () => {
   const renderFavoritesArea = () => {
     return (
       <SafePageView className="create-class__favorites">
-        <h1>Seccions guardades</h1>
+        <h2>Seccions guardades</h2>
       </SafePageView>
     )
   }

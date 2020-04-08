@@ -1,7 +1,7 @@
 .create-class {
 
   .create-class__editable-column {
-    height: 100vh;
+    min-height: 100vh;
 
     .create-class__editable {
       .create-class__title {
@@ -34,7 +34,7 @@
 
   .create-class__favorites-column {
     border-left: 1px solid rgba(0, 0, 0, 0.1);
-    height: 100vh;
+    min-height: 100vh;
 
     .create-class__favorites {
 
