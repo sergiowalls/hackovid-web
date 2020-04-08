@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alignment, Button, Navbar } from '@blueprintjs/core'
+import { Alignment, Button, Intent, Navbar } from '@blueprintjs/core'
 import { useHistory } from 'react-router-dom'
 import { useStoreon } from 'storeon/react'
 
@@ -10,7 +10,7 @@ import './AppNavigation.scss'
 
 const AppNavigation = () => {
   const history = useHistory()
-  const { isAuthenticated } = useStoreon<AuthState, AuthEvents>('isAuthenticated')
+  const { dispatch, isAuthenticated } = useStoreon<AuthState, AuthEvents>('isAuthenticated')
 
   if (!isAuthenticated) {
     return null
@@ -37,6 +37,17 @@ const AppNavigation = () => {
             onClick={() => history.push('/classes')}
           >
             Classes
+          </Button>
+        </Navbar.Group>
+
+        <Navbar.Group align={Alignment.RIGHT}>
+          <Button
+            minimal={true}
+            intent={Intent.DANGER}
+            rightIcon="log-out"
+            onClick={() => dispatch('logout')}
+          >
+            Sortir
           </Button>
         </Navbar.Group>
       </Container>

@@ -12,6 +12,7 @@ interface LoginEvent {
 
 export interface AuthEvents {
   login: LoginEvent
+  logout: undefined
 }
 
 export const auth: StoreonModule<AuthState, AuthEvents> = (store: StoreonStore) => {
@@ -20,9 +21,16 @@ export const auth: StoreonModule<AuthState, AuthEvents> = (store: StoreonStore) 
     error: undefined
   }))
 
-  store.on('login', (state, event): AuthState => {
+  store.on('login', (): AuthState => {
     return {
       isAuthenticated: true,
+      error: undefined
+    }
+  })
+
+  store.on('logout', (): AuthState => {
+    return {
+      isAuthenticated: false,
       error: undefined
     }
   })
