@@ -24,7 +24,7 @@ const CreateClassPage = () => {
       }
     })
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       console.log("Success")
     } else {
       console.error("Error creating class")
