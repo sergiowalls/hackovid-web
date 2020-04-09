@@ -1,44 +1,41 @@
 import { StoreonModule, StoreonStore } from 'storeon'
+import { State } from './state/State'
+import { Events, LoginPayload } from './event/Events'
 
-export interface AuthState {
-  isAuthenticated: boolean
-  error?: string
-}
-
-interface LoginEvent {
-  username: string,
-  password: string
-}
-
-export interface AuthEvents {
-  login: LoginEvent
-  logout: undefined
-}
-
-export const auth: StoreonModule<AuthState, AuthEvents> = (store: StoreonStore) => {
-  store.on('@init', (): AuthState => {
+export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Events>) => {
+  store.on('@init', (state: State): State => {
     const isAuthenticated = localStorage.getItem('authenticated') !== null
 
     return {
-      isAuthenticated,
-      error: undefined
+      ...state,
+      auth: {
+        isAuthenticated,
+        error: undefined
+      }
     }
   })
 
-  store.on('login', (): AuthState => {
+  store.on('auth/login', (state: State, event: LoginPayload): State => {
     localStorage.setItem('authenticated', 'true')
 
     return {
-      isAuthenticated: true,
-      error: undefined
+      ...state,
+      auth: {
+        isAuthenticated: true,
+        error: undefined
+      }
     }
   })
 
-  store.on('logout', (): AuthState => {
+  store.on('auth/logout', (state: State): State => {
     localStorage.removeItem('authenticated')
+
     return {
-      isAuthenticated: false,
-      error: undefined
+      ...state,
+      auth: {
+        isAuthenticated: false,
+        error: undefined
+      }
     }
   })
 }

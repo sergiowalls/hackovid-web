@@ -14,13 +14,15 @@ import { LoginPage } from './pages/LoginPage/LoginPage'
 import { CreateClassPage } from './pages/CreateClassPage/CreateClassPage'
 import { AppNavigation } from './lib/molecules/AppNavigation/AppNavigation'
 import { HomePage } from './pages/HomePage/HomePage'
+import { MyClassesPage } from './pages/MyClassesPage/MyClassesPage'
+import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
+import { RegisterPage } from './pages/RegisterPage/RegisterPage'
+
+import { AlertDisplay } from './lib/molecules/AlertDisplay/AlertDisplay'
 
 import { store } from './store'
 
 import './App.scss'
-import { MyClassesPage } from './pages/MyClassesPage/MyClassesPage'
-import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
-import { RegisterPage } from './pages/RegisterPage/RegisterPage'
 
 FocusStyleManager.onlyShowFocusOnTabs()
 
@@ -53,6 +55,8 @@ const App = () => {
             <Redirect to="/404" />
           </Route>
         </Switch>
+
+        <AlertDisplay />
       </Router>
     </StoreContext.Provider>
   )

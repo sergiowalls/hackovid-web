@@ -3,13 +3,14 @@ import { Alignment, Button, Intent, Navbar } from '@blueprintjs/core'
 import { useStoreon } from 'storeon/react'
 
 import { Container } from '../../atoms/Container/Container'
-import { AuthEvents, AuthState } from '../../../store/auth'
 import { AppMenuItem } from '../AppMenuItem/AppMenuItem'
+import { State } from '../../../store/state/State'
+import { Events } from '../../../store/event/Events'
 
 import './AppNavigation.scss'
 
 const AppNavigation = () => {
-  const { dispatch, isAuthenticated } = useStoreon<AuthState, AuthEvents>('isAuthenticated')
+  const { dispatch, auth: { isAuthenticated } } = useStoreon<State, Events>('auth')
 
   if (!isAuthenticated) {
     return null
@@ -36,7 +37,7 @@ const AppNavigation = () => {
             minimal={true}
             intent={Intent.DANGER}
             icon="log-out"
-            onClick={() => dispatch('logout')}
+            onClick={() => dispatch('auth/logout')}
           >
             Sortir
           </Button>
