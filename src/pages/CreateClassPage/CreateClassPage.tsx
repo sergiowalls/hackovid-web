@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { Button } from '@blueprintjs/core'
+import { Intent } from '@blueprintjs/core/lib/esm/common/intent'
+import axios from 'axios'
 
 import { Container } from '../../lib/atoms/Container/Container'
 import { Row } from '../../lib/atoms/Row/Row'
@@ -13,6 +16,21 @@ import './CreateClassPage.scss'
 const CreateClassPage = () => {
   const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew())
 
+  const createClass = async () => {
+    const response = await axios.request({
+      url: 'http://aula.centralyze.io:1337/learning/class',
+      data: {
+        title: classEntity.header.title
+      }
+    })
+
+    if (response.status === 201) {
+      console.log("Success")
+    } else {
+      console.error("Error creating class")
+    }
+  }
+
   const renderFavoritesArea = () => {
     return (
       <SafePageView>
@@ -26,6 +44,11 @@ const CreateClassPage = () => {
       <Container leftMarginClass="create-class__container__left-margin">
         <Row>
           <Col md={8} className="create-class__editable-column">
+            <Button
+              intent={Intent.SUCCESS}
+              onClick={createClass}
+            >Guardar</Button>
+
             <EditableClass
               classEntity={classEntity}
               onChange={setClassEntity}
