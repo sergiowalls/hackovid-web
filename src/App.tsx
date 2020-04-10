@@ -13,10 +13,10 @@ import { FocusStyleManager } from '@blueprintjs/core'
 import { LoginPage } from './pages/LoginPage/LoginPage'
 import { CreateClassPage } from './pages/CreateClassPage/CreateClassPage'
 import { AppNavigation } from './lib/molecules/AppNavigation/AppNavigation'
-import { HomePage } from './pages/HomePage/HomePage'
-import { MyClassesPage } from './pages/MyClassesPage/MyClassesPage'
+import { ClassesPage } from './pages/ClassesPage/ClassesPage'
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage'
 import { RegisterPage } from './pages/RegisterPage/RegisterPage'
+import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 
 import { AlertDisplay } from './lib/molecules/AlertDisplay/AlertDisplay'
 
@@ -43,10 +43,13 @@ const App = () => {
             <CreateClassPage />
           </Route>
           <Route exact path="/classes">
-            <MyClassesPage />
+            <ClassesPage />
+          </Route>
+          <Route exact path="/profile">
+            <ProfilePage />
           </Route>
           <Route exact path="/">
-            <HomePage />
+            <Redirect to="/classes" />
           </Route>
           <Route exact path="/404">
             <NotFoundPage />
