@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useStoreon } from 'storeon/react'
+
 import { SafePageView } from './molecules/SafePageView/SafePageView'
 import { Container } from './atoms/Container/Container'
 import { LearningUnit } from '../model/LearningUnit'
-import { useStoreon } from 'storeon/react'
 import { State } from '../store/state/State'
 import { Events } from '../store/event/Events'
 
@@ -26,7 +27,7 @@ const LoadBaseAssets = ({ children }: LoadBaseAssetsProps) => {
       .catch(() => {
         setIsLoaded(true)
       })
-  }, [])
+  })
 
   if (!isLoaded) {
     return (
