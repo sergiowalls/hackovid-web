@@ -1,13 +1,8 @@
 import { Alert } from '../../model/Alert'
-
-
-export interface LoginPayload {
-  username: string,
-  password: string
-}
+import { AuthToken } from '../../model/AuthToken'
 
 export interface AuthEvents {
-  'auth/login': LoginPayload
+  'auth/authenticate': AuthToken
   'auth/logout': undefined
 }
 

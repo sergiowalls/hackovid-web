@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Divider, Elevation, FormGroup, InputGroup } from '@blueprintjs/core'
+import { Card, Divider, Elevation } from '@blueprintjs/core'
 
 import './AuthForm.scss'
 

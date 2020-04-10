@@ -1,0 +1,6 @@
+
+class AuthToken {
+
+}
+
+export { AuthToken }
