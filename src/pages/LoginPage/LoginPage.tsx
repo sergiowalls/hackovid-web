@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStoreon } from 'storeon/react'
-import { Button } from '@blueprintjs/core'
+import { Button, FormGroup, InputGroup } from '@blueprintjs/core'
 import { Link } from 'react-router-dom'
 
 import { PublicPage } from '../../lib/molecules/PublicPage/PublicPage'
@@ -25,17 +25,37 @@ const LoginPage = () => {
         <SafePageView>
           <AuthForm
             header={<>Entra</>}
-            actions={<>
+            actions={<div className="login-page__actions">
               <Button
                 large={true}
                 onClick={handleOnLoginClick}
-                icon="log-in"
-              >Entrar</Button>
+              >Entra</Button>
               <div className="login-page__actions__alternative">
                 Encara no tens compte? <Link to="/register">Registra't</Link>
               </div>
-            </>}
-          />
+            </div>}
+          >
+            <FormGroup
+              label="Adreça de correu electrònic"
+              labelFor="email-input"
+            >
+              <InputGroup
+                id="email-input"
+                placeholder="exemple@exemple.com"
+                type="email"
+              />
+            </FormGroup>
+            <FormGroup
+              label="Contrassenya"
+              labelFor="password-input"
+            >
+              <InputGroup
+                id="password-input"
+                placeholder="****"
+                type="password"
+              />
+            </FormGroup>
+          </AuthForm>
         </SafePageView>
       </Container>
     </PublicPage>
