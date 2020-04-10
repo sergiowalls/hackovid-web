@@ -2,18 +2,18 @@ import React, { ChangeEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Icon, InputGroup } from '@blueprintjs/core'
 import axios from 'axios'
+import { useStoreon } from 'storeon/react'
 
 import { PublicPage } from '../../lib/molecules/PublicPage/PublicPage'
 import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 import { Container } from '../../lib/atoms/Container/Container'
 import { AuthForm } from '../../lib/molecules/AuthForm/AuthForm'
-
-import './RegisterPage.scss'
-import { useStoreon } from 'storeon/react'
 import { State } from '../../store/state/State'
 import { Events } from '../../store/event/Events'
 import { Alert } from '../../model/Alert'
 import { AuthToken } from '../../model/AuthToken'
+
+import './RegisterPage.scss'
 
 const RegisterPage = () => {
   const [ username, setUsername ] = useState<string>('')
@@ -32,6 +32,7 @@ const RegisterPage = () => {
       username,
       password,
       email: username,
+      firstName: name,
       institution,
       subjects: [],
       courses: []
