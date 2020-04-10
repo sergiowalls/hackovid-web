@@ -1,5 +1,6 @@
 import { Alert } from '../../model/Alert'
 import { AuthToken } from '../../model/AuthToken'
+import { LearningUnit } from '../../model/LearningUnit'
 
 export interface AuthEvents {
   'auth/authenticate': AuthToken
@@ -11,4 +12,8 @@ export interface AlertEvents {
   'alert/showAlert': Alert
 }
 
-export type Events = AuthEvents & AlertEvents
+export interface LearningEvents {
+  'learning/updateLearningUnits': LearningUnit[]
+}
+
+export type Events = AuthEvents & AlertEvents & LearningEvents

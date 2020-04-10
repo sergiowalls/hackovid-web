@@ -23,44 +23,47 @@ import { AlertDisplay } from './lib/molecules/AlertDisplay/AlertDisplay'
 import { store } from './store'
 
 import './App.scss'
+import { LoadBaseAssets } from './lib/LoadBaseAssets'
 
 FocusStyleManager.onlyShowFocusOnTabs()
 
 const App = () => {
   return (
     <StoreContext.Provider value={store}>
-      <Router>
-        <AppNavigation />
+      <LoadBaseAssets>
+        <Router>
+          <AppNavigation />
 
-        <Switch>
-          <Route exact path="/login">
-            <LoginPage />
-          </Route>
-          <Route exact path="/register">
-            <RegisterPage />
-          </Route>
-          <Route exact path="/classes/new">
-            <CreateClassPage />
-          </Route>
-          <Route exact path="/classes">
-            <ClassesPage />
-          </Route>
-          <Route exact path="/profile">
-            <ProfilePage />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/classes" />
-          </Route>
-          <Route exact path="/404">
-            <NotFoundPage />
-          </Route>
-          <Route>
-            <Redirect to="/404" />
-          </Route>
-        </Switch>
+          <Switch>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/register">
+              <RegisterPage />
+            </Route>
+            <Route exact path="/classes/new">
+              <CreateClassPage />
+            </Route>
+            <Route exact path="/classes">
+              <ClassesPage />
+            </Route>
+            <Route exact path="/profile">
+              <ProfilePage />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/classes" />
+            </Route>
+            <Route exact path="/404">
+              <NotFoundPage />
+            </Route>
+            <Route>
+              <Redirect to="/404" />
+            </Route>
+          </Switch>
 
-        <AlertDisplay />
-      </Router>
+          <AlertDisplay />
+        </Router>
+      </LoadBaseAssets>
     </StoreContext.Provider>
   )
 }

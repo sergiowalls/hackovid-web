@@ -10,8 +10,7 @@ export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Ev
     return {
       ...state,
       auth: {
-        isAuthenticated,
-        error: undefined
+        isAuthenticated
       }
     }
   })
@@ -24,8 +23,7 @@ export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Ev
     return {
       ...state,
       auth: {
-        isAuthenticated: true,
-        error: undefined
+        isAuthenticated: true
       }
     }
   })
@@ -36,8 +34,7 @@ export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Ev
     return {
       ...state,
       auth: {
-        isAuthenticated: false,
-        error: undefined
+        isAuthenticated: false
       }
     }
   })
