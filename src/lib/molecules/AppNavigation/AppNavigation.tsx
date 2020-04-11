@@ -25,10 +25,10 @@ const AppNavigation = () => {
 
           <Navbar.Divider />
 
-          <AppMenuItem icon="home" path="/classes">
+          <AppMenuItem icon="presentation" path="/classes">
             Classes
           </AppMenuItem>
-          <AppMenuItem icon="inbox" path="/profile">
+          <AppMenuItem icon="person" path="/profile">
             Perfil
           </AppMenuItem>
         </Navbar.Group>

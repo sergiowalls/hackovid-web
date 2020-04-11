@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { Class } from '../../model/Class'
+import { Class, ClassViewType } from '../../model/Class'
 
 import './ClassPage.scss'
 import { ClassResponse } from '../../model/http/ClassResponse'
@@ -10,18 +10,19 @@ import { useStoreon } from 'storeon/react'
 import { State } from '../../store/state/State'
 import { Events } from '../../store/event/Events'
 import { Alert } from '../../model/Alert'
-import { Page } from '../../lib/molecules/Page/Page'
 import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 import { Container } from '../../lib/atoms/Container/Container'
 import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
 import urls from '../../lib/helpers/urls'
+import { EditableClass } from '../../lib/molecules/EditableClass/EditableClass'
 
 const useQuery = () => new URLSearchParams(useLocation().search)
 
 const ClassPage = () => {
   const [ classEntity, setClassEntity ] = useState<Class | null>(null)
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
+  const { auth } = useStoreon<State, Events>('auth')
 
   const { dispatch } = useStoreon<State, Events>()
 
@@ -50,18 +51,21 @@ const ClassPage = () => {
   }, [query.get('classId')])
 
   return (
-    <Page className="class-page">
+    <div className="class-page">
       <SafePageView>
         <Container>
           {isLoading && <div>Carregant...</div>}
           {!isLoading && classEntity && (
-            <div>
-              Classe: {classEntity!!.header.title}
+            <div className="class-page__class-container">
+              <EditableClass
+                classEntity={classEntity!!}
+                viewType={auth.isAuthenticated ? ClassViewType.Saveable : ClassViewType.Viewable}
+              />
             </div>
           )}
         </Container>
       </SafePageView>
-    </Page>
+    </div>
   )
 }
 

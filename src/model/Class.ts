@@ -1,6 +1,12 @@
 import { ClassHeader } from './ClassHeader'
 import { ClassSection } from './ClassSection'
 
+enum ClassViewType {
+  Editable,
+  Saveable,
+  Viewable
+}
+
 class Class {
   constructor(
     public id: number,
@@ -17,4 +23,4 @@ class Class {
   }
 }
 
-export { Class }
+export { Class, ClassViewType }

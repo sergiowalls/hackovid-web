@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { Button } from '@blueprintjs/core'
-import { Intent } from '@blueprintjs/core/lib/esm/common/intent'
 import { useStoreon } from 'storeon/react'
 
 import { Container } from '../../lib/atoms/Container/Container'
@@ -9,7 +7,7 @@ import { Col } from '../../lib/atoms/Col/Col'
 import { Page } from '../../lib/molecules/Page/Page'
 import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 import { EditableClass } from '../../lib/molecules/EditableClass/EditableClass'
-import { Class } from '../../model/Class'
+import { Class, ClassViewType } from '../../model/Class'
 import { Alert } from '../../model/Alert'
 import { Events } from '../../store/event/Events'
 import { State } from '../../store/state/State'
@@ -59,6 +57,8 @@ const CreateClassPage = () => {
             <EditableClass
               classEntity={classEntity}
               onChange={setClassEntity}
+              viewType={ClassViewType.Editable}
+              title="Nova classe"
             />
 
             <FloatingActionButton
