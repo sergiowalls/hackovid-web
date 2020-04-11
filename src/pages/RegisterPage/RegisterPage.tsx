@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, FormGroup, Icon, InputGroup } from '@blueprintjs/core'
-import axios from 'axios'
 import { useStoreon } from 'storeon/react'
 
 import { PublicPage } from '../../lib/molecules/PublicPage/PublicPage'
@@ -12,10 +11,10 @@ import { State } from '../../store/state/State'
 import { Events } from '../../store/event/Events'
 import { Alert } from '../../model/Alert'
 import { AuthToken } from '../../model/AuthToken'
-
-import './RegisterPage.scss'
 import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
+
+import './RegisterPage.scss'
 
 const RegisterPage = () => {
   const [ username, setUsername ] = useState<string>('')
