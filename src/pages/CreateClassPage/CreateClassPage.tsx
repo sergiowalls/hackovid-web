@@ -19,14 +19,18 @@ import './CreateClassPage.scss'
 
 const CreateClassPage = () => {
   const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew())
-  const { dispatch } = useStoreon<State, Events>()
+  const { dispatch, auth: { authToken } } = useStoreon<State, Events>('auth')
 
   const createClass = async () => {
     await axios.request({
-      url: 'http://aula.centralyze.io:1337/learning/class',
+      url: 'http://aula.centralyze.io:1337/learning/classes',
       method: 'POST',
       data: {
-        title: classEntity.header.title
+        title: classEntity.header.title,
+        learning_unit: 1
+      },
+      headers: {
+        Authorization: `Token ${authToken ? authToken.token : null}`
       }
     }).then(() => {
       console.log("Success")

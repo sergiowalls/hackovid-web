@@ -1,5 +1,6 @@
 import { Alert } from '../../model/Alert'
 import { LearningUnit } from '../../model/LearningUnit'
+import { AuthToken } from '../../model/AuthToken'
 
 export interface AlertState {
   alert?: Alert
@@ -7,6 +8,7 @@ export interface AlertState {
 
 export interface AuthState {
   isAuthenticated: boolean
+  authToken?: AuthToken
 }
 
 export interface LearningState {

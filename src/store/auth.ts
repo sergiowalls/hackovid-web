@@ -5,12 +5,18 @@ import { AuthToken } from '../model/AuthToken'
 
 export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Events>) => {
   store.on('@init', (state: State): State => {
-    const isAuthenticated = localStorage.getItem('authenticated') !== null
+    const authTokenStringValue = localStorage.getItem('authToken')
+
+    const authTokenValue = authTokenStringValue ? JSON.parse(authTokenStringValue) : undefined
+
+    const authToken = authTokenValue ? new AuthToken(authTokenValue.token) : undefined
+    const isAuthenticated = authTokenValue !== undefined
 
     return {
       ...state,
       auth: {
-        isAuthenticated
+        isAuthenticated,
+        authToken
       }
     }
   })
@@ -18,18 +24,19 @@ export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Ev
   store.on('auth/authenticate', (state: State, event: AuthToken): State => {
     console.log(event)
 
-    localStorage.setItem('authenticated', 'true')
+    localStorage.setItem('authToken', JSON.stringify(event))
 
     return {
       ...state,
       auth: {
-        isAuthenticated: true
+        isAuthenticated: true,
+        authToken: event
       }
     }
   })
 
   store.on('auth/logout', (state: State): State => {
-    localStorage.removeItem('authenticated')
+    localStorage.removeItem('authToken')
 
     return {
       ...state,
