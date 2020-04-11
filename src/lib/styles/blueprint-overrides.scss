@@ -1,0 +1,28 @@
+
+$pt-intent-primary: #633a82;
+$pt-intent-success: #40e0d0;
+$pt-intent-warning: yellow;
+$pt-intent-danger: red;
+
+$pt-intent-colors: (
+        "primary": $pt-intent-primary,
+        "success": $pt-intent-success,
+        "warning": $pt-intent-warning,
+        "danger" : $pt-intent-danger,
+);
+
+$pt-intent-text-colors: (
+        "primary": lighten($pt-intent-primary, 20),
+        "success": lighten($pt-intent-success, 20),
+        "warning": lighten($pt-intent-warning, 20),
+        "danger" : lighten($pt-intent-danger, 20),
+);
+
+$button-intents: (
+        "primary": ($pt-intent-primary, darken($pt-intent-primary, 30), darken($pt-intent-primary, 70)),
+        "success": ($pt-intent-success, darken($pt-intent-success, 30), darken($pt-intent-success, 70)),
+        "warning": ($pt-intent-warning, darken($pt-intent-warning, 30), darken($pt-intent-warning, 70)),
+        "danger": ($pt-intent-danger, darken($pt-intent-danger, 30), darken($pt-intent-danger, 70))
+);
+
+$navbar-background-color: #633a82;

@@ -8,6 +8,7 @@ import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
 
 import './AppNavigation.scss'
+import { AppMenuButton } from '../AppMenuButton/AppMenuButton'
 
 const AppNavigation = () => {
   const { dispatch, auth: { isAuthenticated } } = useStoreon<State, Events>('auth')
@@ -33,14 +34,12 @@ const AppNavigation = () => {
         </Navbar.Group>
 
         <Navbar.Group align={Alignment.RIGHT}>
-          <Button
-            minimal={true}
-            intent={Intent.DANGER}
+          <AppMenuButton
             icon="log-out"
             onClick={() => dispatch('auth/logout')}
           >
             Sortir
-          </Button>
+          </AppMenuButton>
         </Navbar.Group>
       </Container>
     </Navbar>

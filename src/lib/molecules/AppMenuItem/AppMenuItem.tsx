@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '@blueprintjs/core'
 import { useHistory, useLocation } from 'react-router-dom'
 import { IconName } from '@blueprintjs/icons'
+
+import { AppMenuButton } from '../AppMenuButton/AppMenuButton'
+
+import './AppMenuItem.scss'
 
 interface AppMenuItemProps {
   icon: IconName
@@ -24,14 +27,13 @@ const AppMenuItem = ({
   }, [location.pathname, path])
 
   return (
-    <Button
-      minimal={true}
-      icon={icon}
+    <AppMenuButton
       onClick={() => history.push(path)}
-      active={active}
+      className={`app-menu-item__button ${active ? 'active' : ''}`}
+      icon={icon}
     >
       {children}
-    </Button>
+    </AppMenuButton>
   )
 }
 
