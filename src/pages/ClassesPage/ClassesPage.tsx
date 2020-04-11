@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Tab, Tabs } from '@blueprintjs/core'
+import { useHistory } from 'react-router-dom'
 
 import { Page } from '../../lib/molecules/Page/Page'
 import { Container } from '../../lib/atoms/Container/Container'
@@ -8,6 +9,7 @@ import { Row } from '../../lib/atoms/Row/Row'
 import { Col } from '../../lib/atoms/Col/Col'
 import { ClassList } from '../../lib/molecules/ClassList/ClassList'
 import { ClassFilters } from '../../model/ClassFilters'
+import { FloatingActionButton } from '../../lib/atoms/FloatingActionButton/FloatingActionButton'
 
 import './ClassesPage.scss'
 
@@ -15,6 +17,8 @@ type ClassesTabs = 'all' | 'mine'
 
 const ClassesPage = () => {
   const [ selectedTab, setSelectedTab ] = useState<ClassesTabs>("all")
+
+  const history = useHistory()
 
   const renderFilters = () => {
     return (
@@ -70,6 +74,8 @@ const ClassesPage = () => {
             </h2>
 
             {renderClassList(selectedTab)}
+
+            <FloatingActionButton icon="plus" onClick={() => history.push('/classes/new')} />
             </SafePageView>
           </Col>
         </Row>
