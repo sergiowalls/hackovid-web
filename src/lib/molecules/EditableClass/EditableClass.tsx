@@ -23,7 +23,7 @@ const EditableClass = ({
   const [ sections, setSections ] = useState<ClassSection[]>(classEntity.sections)
 
   useEffect(() => {
-    onChange(new Class(header, sections))
+    onChange(new Class(classEntity.id, header, sections))
   }, [header, sections])
 
   const getNextSectionId = () => {

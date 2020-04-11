@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useStoreon } from 'storeon/react'
 
 import { ClassFilters } from '../../../model/ClassFilters'
 import { Class } from '../../../model/Class'
 import { ClassListItem } from '../ClassListItem/ClassListItem'
-
-import './ClassList.scss'
-import { useStoreon } from 'storeon/react'
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
 import { Alert } from '../../../model/Alert'
+import { ClassHeader } from '../../../model/ClassHeader'
+import { ClassSection } from '../../../model/ClassSection'
+
+import './ClassList.scss'
 
 interface ClassResponse {
-
+  id: number
+  title: string
+  teacher: number
+  created_at: string
+  sections: {
+    id: number,
+    title: string,
+    description: string,
+    learning_unit: number,
+    resources: any[]
+  }[]
 }
 
 interface ClassListProps {
@@ -27,9 +39,22 @@ const ClassList = ({
   const { dispatch } = useStoreon<State, Events>()
 
   useEffect(() => {
-    axios.get('http://aula.centralyze.io:1337/learning/classes')
+    axios.get<ClassResponse[]>('http://aula.centralyze.io:1337/learning/classes')
       .then(response => {
         console.log(response.data)
+
+        setClasses(response.data.map(classResponse => new Class(
+          classResponse.id,
+          new ClassHeader(
+            classResponse.title,
+            []
+          ),
+          classResponse.sections.map(section => new ClassSection(
+            section.id,
+            section.title,
+            section.description
+          ))
+        )))
       })
       .catch(() => {
         dispatch(

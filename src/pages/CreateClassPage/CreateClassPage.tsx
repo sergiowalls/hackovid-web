@@ -27,7 +27,13 @@ const CreateClassPage = () => {
       method: 'POST',
       data: {
         title: classEntity.header.title,
-        learning_unit: 1
+        learning_unit: 1,
+        sections: classEntity.sections.map((section) => ({
+          title: section.title,
+          description: section.htmlContent,
+          resources: [],
+          learning_unit: 1
+        }))
       },
       headers: {
         Authorization: `Token ${authToken ? authToken.token : null}`
