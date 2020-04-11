@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Button } from '@blueprintjs/core'
 import { Intent } from '@blueprintjs/core/lib/esm/common/intent'
 import { useStoreon } from 'storeon/react'
-import axios from 'axios'
 
 import { Container } from '../../lib/atoms/Container/Container'
 import { Row } from '../../lib/atoms/Row/Row'
@@ -16,6 +15,7 @@ import { Events } from '../../store/event/Events'
 import { State } from '../../store/state/State'
 import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
+import urls from '../../lib/helpers/urls'
 
 import './CreateClassPage.scss'
 
@@ -24,7 +24,7 @@ const CreateClassPage = () => {
   const { dispatch, auth } = useStoreon<State, Events>('auth')
 
   const createClass = async () => {
-    const responseTry = await http.post<any>('http://aula.centralyze.io:1337/learning/classes', {
+    const responseTry = await http.post<any>(urls.class.create(), {
       title: classEntity.header.title,
       learning_unit: 1,
       sections: classEntity.sections.map((section) => ({

@@ -22,7 +22,7 @@ const request = <TResponse> (url: string, method: Method, data?: any, auth?: Aut
 
     if (auth && auth.isAuthenticated && auth.authToken) {
       config.headers = {
-        Authentication: `Token ${auth.authToken.token}`
+        Authorization: `Token ${auth.authToken.token}`
       }
     }
 

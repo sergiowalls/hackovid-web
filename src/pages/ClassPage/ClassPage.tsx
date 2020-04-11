@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import axios from 'axios'
 
 import { Class } from '../../model/Class'
 
@@ -16,6 +15,7 @@ import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 import { Container } from '../../lib/atoms/Container/Container'
 import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
+import urls from '../../lib/helpers/urls'
 
 const useQuery = () => new URLSearchParams(useLocation().search)
 
@@ -31,7 +31,7 @@ const ClassPage = () => {
     const fetchClass = async () => {
       setIsLoading(true)
 
-      const responseTry = await http.get<ClassResponse>(`http://aula.centralyze.io:1337/learning/classes/${query.get('classId')}`)
+      const responseTry = await http.get<ClassResponse>(urls.class.getById(query.get('classId')))
 
       if (responseTry instanceof Success) {
         setIsLoading(false)

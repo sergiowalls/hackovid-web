@@ -2,7 +2,6 @@ import React, { ChangeEvent, useState } from 'react'
 import { useStoreon } from 'storeon/react'
 import { Button, FormGroup, InputGroup } from '@blueprintjs/core'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 
 import { PublicPage } from '../../lib/molecules/PublicPage/PublicPage'
 import { Container } from '../../lib/atoms/Container/Container'
@@ -16,6 +15,7 @@ import { AuthToken } from '../../model/AuthToken'
 import { Alert } from '../../model/Alert'
 import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
+import urls from '../../lib/helpers/urls'
 
 const LoginPage = () => {
   const [ username, setUsername ] = useState<string>('')
@@ -29,7 +29,7 @@ const LoginPage = () => {
     const doLogin = async () => {
       setIsLoging(true)
 
-      const responseTry = await http.post<AuthToken>('http://aula.centralyze.io:1337/api-token-auth/', {
+      const responseTry = await http.post<AuthToken>(urls.login(), {
         username,
         password
       })

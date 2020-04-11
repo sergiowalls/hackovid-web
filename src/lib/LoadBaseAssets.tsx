@@ -10,6 +10,7 @@ import { Success } from './helpers/Try'
 import { Alert } from '../model/Alert'
 
 import http from './services/http'
+import urls from './helpers/urls'
 
 interface LoadBaseAssetsProps {
   children?: any
@@ -22,7 +23,7 @@ const LoadBaseAssets = ({ children }: LoadBaseAssetsProps) => {
 
   useEffect(() => {
     const fetchLearningUnits = async () => {
-      const responseTry = await http.get<LearningUnit[]>('http://aula.centralyze.io:1337/learning/learning-units')
+      const responseTry = await http.get<LearningUnit[]>(urls.learningUnits())
 
       if (responseTry instanceof Success) {
         const response = responseTry as Success<LearningUnit[]>

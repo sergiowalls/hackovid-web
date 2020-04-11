@@ -15,6 +15,7 @@ import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
 
 import './RegisterPage.scss'
+import urls from '../../lib/helpers/urls'
 
 const RegisterPage = () => {
   const [ username, setUsername ] = useState<string>('')
@@ -30,7 +31,7 @@ const RegisterPage = () => {
     const doRegister = async () => {
       setIsRegistering(true)
 
-      const registerResponseTry = await http.post('http://aula.centralyze.io:1337/learning/users', {
+      const registerResponseTry = await http.post(urls.register(), {
         username,
         password,
         email: username,
@@ -41,7 +42,7 @@ const RegisterPage = () => {
       })
 
       if (registerResponseTry instanceof Success) {
-        const loginResponseTry = await http.post('http://aula.centralyze.io:1337/api-token-auth/', {
+        const loginResponseTry = await http.post(urls.login(), {
           username,
           password
         })

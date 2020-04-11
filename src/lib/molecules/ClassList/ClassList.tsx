@@ -11,6 +11,7 @@ import { ClassResponse } from '../../../model/http/ClassResponse'
 import { assembleClassFrom } from '../../services/responseAssemblers'
 import http from '../../services/http'
 import { Success } from '../../helpers/Try'
+import urls from '../../helpers/urls'
 
 import './ClassList.scss'
 
@@ -27,10 +28,7 @@ const ClassList = ({
 
   useEffect(() => {
     const fetchClasses = async () => {
-      const url = 'http://aula.centralyze.io:1337/learning/classes'
-        + (filters.learningUnits ? '?learning-unit=1' : '')
-
-      const responseTry = await http.get<ClassResponse[]>(url)
+      const responseTry = await http.get<ClassResponse[]>(urls.class.getByFilter(filters))
 
       if (responseTry instanceof Success) {
         const response = responseTry as Success<ClassResponse[]>

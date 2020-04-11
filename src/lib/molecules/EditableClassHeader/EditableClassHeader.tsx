@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Elevation } from '@blueprintjs/core/lib/esm/common/elevation'
-import { Card, Divider, EditableText, TagInput } from '@blueprintjs/core'
+import { Card, Divider, EditableText } from '@blueprintjs/core'
 
 import { ClassHeader } from '../../../model/ClassHeader'
 
