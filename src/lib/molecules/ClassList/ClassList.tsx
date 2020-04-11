@@ -39,7 +39,10 @@ const ClassList = ({
   const { dispatch } = useStoreon<State, Events>()
 
   useEffect(() => {
-    axios.get<ClassResponse[]>('http://aula.centralyze.io:1337/learning/classes')
+    const url = 'http://aula.centralyze.io:1337/learning/classes'
+      + (filters.learningUnits ? '?learning-unit=1' : '')
+
+    axios.get<ClassResponse[]>(url)
       .then(response => {
         console.log(response.data)
 
@@ -66,7 +69,11 @@ const ClassList = ({
 
   return (
     <div className="class-list">
-      {classes.map(classEntity => <ClassListItem classEntity={classEntity} />)}
+      {classes.map(classEntity => (
+        <div className="class-list__item">
+          <ClassListItem classEntity={classEntity} />
+        </div>
+      ))}
     </div>
   )
 }

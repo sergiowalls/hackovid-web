@@ -21,11 +21,6 @@
           margin-right: 0.5em;
 
           font-weight: bold;
-
-          &:hover {
-            color: black;
-            cursor: pointer;
-          }
         }
 
         .class-list-item__details__date {
@@ -57,5 +52,10 @@
   .class-list-item__sections {
     margin-left: 1em;
     margin-top: 1em;
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.03);
   }
 }
