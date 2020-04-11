@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useStoreon } from 'storeon/react'
 
-import { ClassFilters } from '../../../model/ClassFilters'
+import { Filters } from '../../../model/Filters'
 import { Class } from '../../../model/Class'
 import { ClassListItem } from '../ClassListItem/ClassListItem'
 import { State } from '../../../store/state/State'
@@ -16,7 +16,7 @@ import urls from '../../helpers/urls'
 import './ClassList.scss'
 
 interface ClassListProps {
-  filters: ClassFilters
+  filters: Filters
 }
 
 const ClassList = ({

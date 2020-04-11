@@ -1,4 +1,4 @@
-import { ClassFilters } from '../../model/ClassFilters'
+import { Filters } from '../../model/Filters'
 
 const baseUrl = "http://aula.centralyze.io:1337"
 
@@ -6,7 +6,7 @@ export default {
   login: () => `${baseUrl}/api-token-auth/`,
   register: () => `${baseUrl}/learning/users`,
   class: {
-    getByFilter: (filters: ClassFilters) => {
+    getByFilter: (filters: Filters) => {
       return `${baseUrl}/learning/classes`
         + (filters.learningUnits ? '?learning-unit=1' : '')
     },

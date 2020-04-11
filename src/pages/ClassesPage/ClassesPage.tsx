@@ -8,8 +8,9 @@ import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 import { Row } from '../../lib/atoms/Row/Row'
 import { Col } from '../../lib/atoms/Col/Col'
 import { ClassList } from '../../lib/molecules/ClassList/ClassList'
-import { ClassFilters } from '../../model/ClassFilters'
+import { Filters } from '../../model/Filters'
 import { FloatingActionButton } from '../../lib/atoms/FloatingActionButton/FloatingActionButton'
+import { ClassFilters } from '../../lib/molecules/ClassFilters/ClassFilters'
 
 import './ClassesPage.scss'
 
@@ -24,13 +25,15 @@ const ClassesPage = () => {
     return (
       <SafePageView>
         <h2>Filtres</h2>
+
+        <ClassFilters />
       </SafePageView>
     )
   }
 
   const renderClassList = (tab: ClassesTabs) => {
     return (
-      <ClassList filters={new ClassFilters()} />
+      <ClassList filters={new Filters()} />
     )
   }
 
@@ -51,37 +54,37 @@ const ClassesPage = () => {
           </Col>
           <Col md={9} className="classes-page__classes-column">
             <SafePageView>
-            <div className="classes-page__tabs">
-              <Tabs
-                id="classes-tab"
-                onChange={handleOnTabChange}
-                selectedTabId={`classes-tab-${selectedTab}`}
-                large={true}
-              >
-                <Tab id="classes-tab-all" className="classes-page__tab" title="Totes les classes" />
+              <div className="classes-page__tabs">
+                <Tabs
+                  id="classes-tab"
+                  onChange={handleOnTabChange}
+                  selectedTabId={`classes-tab-${selectedTab}`}
+                  large={true}
+                >
+                  <Tab id="classes-tab-all" className="classes-page__tab" title="Totes les classes" />
 
-                <Tabs.Expander />
-                <Tabs.Expander />
-                <Tabs.Expander />
+                  <Tabs.Expander />
+                  <Tabs.Expander />
+                  <Tabs.Expander />
 
-                <Tab id="classes-tab-mine" className="classes-page__tab" title="Les meves classes" />
-              </Tabs>
-            </div>
+                  <Tab id="classes-tab-mine" className="classes-page__tab" title="Les meves classes" />
+                </Tabs>
+              </div>
 
-            <h2>
-              {selectedTab === 'all' && <>Totes les classes</>}
-              {selectedTab === 'mine' && <>Les meves classes</>}
-            </h2>
+              <h2>
+                {selectedTab === 'all' && <>Totes les classes</>}
+                {selectedTab === 'mine' && <>Les meves classes</>}
+              </h2>
 
-            <div className="classes-page__list">
-              {renderClassList(selectedTab)}
-            </div>
+              <div className="classes-page__list">
+                {renderClassList(selectedTab)}
+              </div>
 
-            <FloatingActionButton
-              icon="plus"
-              onClick={() => history.push('/classes/new')}
-              popoverText="Crear classe"
-            />
+              <FloatingActionButton
+                icon="plus"
+                onClick={() => history.push('/classes/new')}
+                popoverText="Crear classe"
+              />
             </SafePageView>
           </Col>
         </Row>
