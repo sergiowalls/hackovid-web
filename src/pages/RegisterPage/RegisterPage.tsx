@@ -14,6 +14,8 @@ import { Alert } from '../../model/Alert'
 import { AuthToken } from '../../model/AuthToken'
 
 import './RegisterPage.scss'
+import http from '../../lib/services/http'
+import { Success } from '../../lib/helpers/Try'
 
 const RegisterPage = () => {
   const [ username, setUsername ] = useState<string>('')
@@ -26,44 +28,44 @@ const RegisterPage = () => {
   const { dispatch } = useStoreon<State, Events>()
 
   const register = () => {
-    setIsRegistering(true)
+    const doRegister = async () => {
+      setIsRegistering(true)
 
-    axios.post('http://aula.centralyze.io:1337/learning/users', {
-      username,
-      password,
-      email: username,
-      first_name: name,
-      institution,
-      subjects: [],
-      courses: []
-    }).then((response) => {
-      if (response.status === 204) {
-        axios.post<AuthToken>('http://aula.centralyze.io:1337/api-token-auth/', {
+      const registerResponseTry = await http.post('http://aula.centralyze.io:1337/learning/users', {
+        username,
+        password,
+        email: username,
+        first_name: name,
+        institution,
+        subjects: [],
+        courses: []
+      })
+
+      if (registerResponseTry instanceof Success) {
+        const loginResponseTry = await http.post('http://aula.centralyze.io:1337/api-token-auth/', {
           username,
           password
-        }).then((response) => {
-          setIsRegistering(false)
-
-          const data = response.data
-
-          dispatch('alert/showAlert', new Alert('Identificació correcta. Hola <persona>!', 'success'))
-
-          dispatch('auth/authenticate', data)
-        }).catch(error => {
-          setIsRegistering(false)
-          dispatch(
-            'alert/showAlert',
-            new Alert('Hi ha hagut algun problema. Si us plau, torna a la pàgina d\'identificació i prova d\'autenticar-te', 'error')
-          )
         })
+
+        if (loginResponseTry instanceof Success) {
+          setIsRegistering(false)
+
+          const loginResponse = loginResponseTry as Success<AuthToken>
+
+          dispatch('alert/showAlert', new Alert('Identificació correcta. Hola [persona]!', 'success'))
+
+          dispatch('auth/authenticate', loginResponse.value)
+        }
+      } else {
+        setIsRegistering(false)
+        dispatch(
+          'alert/showAlert',
+          new Alert('Hi ha hagut un error en el registre. Si us plau, comproveu els errors i torneu a provar.', 'error')
+        )
       }
-    }).catch(error => {
-      setIsRegistering(false)
-      dispatch(
-        'alert/showAlert',
-        new Alert('Hi ha hagut un error en el registre. Si us plau, comproveu els errors i torneu a provar.', 'error')
-      )
-    })
+    }
+
+    doRegister()
   }
 
   return (

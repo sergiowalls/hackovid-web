@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useStoreon } from 'storeon/react'
 
 import { ClassFilters } from '../../../model/ClassFilters'
@@ -8,12 +7,12 @@ import { ClassListItem } from '../ClassListItem/ClassListItem'
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
 import { Alert } from '../../../model/Alert'
-import { ClassHeader } from '../../../model/ClassHeader'
-import { ClassSection } from '../../../model/ClassSection'
-
-import './ClassList.scss'
 import { ClassResponse } from '../../../model/http/ClassResponse'
 import { assembleClassFrom } from '../../services/responseAssemblers'
+import http from '../../services/http'
+import { Success } from '../../helpers/Try'
+
+import './ClassList.scss'
 
 interface ClassListProps {
   filters: ClassFilters
@@ -24,30 +23,32 @@ const ClassList = ({
 }: ClassListProps) => {
   const [ classes, setClasses ] = useState<Class[]>([])
 
-  const { dispatch } = useStoreon<State, Events>()
+  const { dispatch } = useStoreon<State, Events>('auth')
 
   useEffect(() => {
-    const url = 'http://aula.centralyze.io:1337/learning/classes'
-      + (filters.learningUnits ? '?learning-unit=1' : '')
+    const fetchClasses = async () => {
+      const url = 'http://aula.centralyze.io:1337/learning/classes'
+        + (filters.learningUnits ? '?learning-unit=1' : '')
 
-    axios.get<ClassResponse[]>(url)
-      .then(response => {
-        console.log(response.data)
+      const responseTry = await http.get<ClassResponse[]>(url)
 
-        setClasses(response.data.map(assembleClassFrom))
-      })
-      .catch(() => {
+      if (responseTry instanceof Success) {
+        const response = responseTry as Success<ClassResponse[]>
+        setClasses(response.value.map(assembleClassFrom))
+      } else {
         dispatch(
           'alert/showAlert',
           new Alert('Hi ha hagut un error en carregar les classes. Si us plau, torna a provar en una estona.', 'error')
         )
-      })
+      }
+    }
+    fetchClasses()
   }, [filters])
 
   return (
     <div className="class-list">
       {classes.map(classEntity => (
-        <div className="class-list__item">
+        <div className="class-list__item" key={`class.${classEntity.id}`}>
           <ClassListItem classEntity={classEntity} />
         </div>
       ))}

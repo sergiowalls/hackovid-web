@@ -14,6 +14,8 @@ import { AuthForm } from '../../lib/molecules/AuthForm/AuthForm'
 import './LoginPage.scss'
 import { AuthToken } from '../../model/AuthToken'
 import { Alert } from '../../model/Alert'
+import http from '../../lib/services/http'
+import { Success } from '../../lib/helpers/Try'
 
 const LoginPage = () => {
   const [ username, setUsername ] = useState<string>('')
@@ -24,26 +26,34 @@ const LoginPage = () => {
   const { dispatch } = useStoreon<State, Events>('auth')
 
   const login = () => {
-    setIsLoging(true)
+    const doLogin = async () => {
+      setIsLoging(true)
 
-    axios.post<AuthToken>('http://aula.centralyze.io:1337/api-token-auth/',{
-      username,
-      password
-    }).then((response) => {
-      setIsLoging(false)
+      const responseTry = await http.post<AuthToken>('http://aula.centralyze.io:1337/api-token-auth/', {
+        username,
+        password
+      })
 
-      const data = response.data
+      if (responseTry instanceof Success) {
+        setIsLoging(false)
 
-      dispatch('alert/showAlert', new Alert('Identificació correcta. Hola <persona>!', 'success'))
+        const response = responseTry as Success<AuthToken>
 
-      dispatch('auth/authenticate', data)
-    }).catch(error => {
-      setIsLoging(false)
-      dispatch(
-        'alert/showAlert',
-        new Alert('L\'usuari i/o la contrasenya són incorrectes.', 'error')
-      )
-    })
+        dispatch(
+          'alert/showAlert',
+          new Alert('Identificació correcta. Hola <persona>!', 'success')
+        )
+
+        dispatch('auth/authenticate', response.value)
+      } else {
+        setIsLoging(false)
+        dispatch(
+          'alert/showAlert',
+          new Alert('L\'usuari i/o la contrasenya són incorrectes.', 'error')
+        )
+      }
+    }
+    doLogin()
   }
 
   return (

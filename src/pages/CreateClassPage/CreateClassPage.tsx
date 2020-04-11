@@ -14,37 +14,32 @@ import { Class } from '../../model/Class'
 import { Alert } from '../../model/Alert'
 import { Events } from '../../store/event/Events'
 import { State } from '../../store/state/State'
+import http from '../../lib/services/http'
+import { Success } from '../../lib/helpers/Try'
 
 import './CreateClassPage.scss'
 
 const CreateClassPage = () => {
   const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew())
-  const { dispatch, auth: { authToken } } = useStoreon<State, Events>('auth')
+  const { dispatch, auth } = useStoreon<State, Events>('auth')
 
   const createClass = async () => {
-    await axios.request({
-      url: 'http://aula.centralyze.io:1337/learning/classes',
-      method: 'POST',
-      data: {
-        title: classEntity.header.title,
-        learning_unit: 1,
-        sections: classEntity.sections.map((section) => ({
-          title: section.title,
-          description: section.htmlContent,
-          resources: [],
-          learning_unit: 1
-        }))
-      },
-      headers: {
-        Authorization: `Token ${authToken ? authToken.token : null}`
-      }
-    }).then(() => {
-      console.log("Success")
+    const responseTry = await http.post<any>('http://aula.centralyze.io:1337/learning/classes', {
+      title: classEntity.header.title,
+      learning_unit: 1,
+      sections: classEntity.sections.map((section) => ({
+        title: section.title,
+        description: section.htmlContent,
+        resources: [],
+        learning_unit: 1
+      }))
+    }, auth)
+
+    if (responseTry instanceof Success) {
       dispatch('alert/showAlert', new Alert('Classe creada correctament', 'success'))
-    }).catch(() => {
-      console.log("Error")
+    } else {
       dispatch('alert/showAlert', new Alert('Hi ha hagut un error en crear la classe.', 'error'))
-    })
+    }
   }
 
   const renderFavoritesArea = () => {

@@ -36,7 +36,7 @@ const ClassListItem = ({ classEntity }: ClassListItemProps) => {
 
       <div className="class-list-item__sections">
         {classEntity.sections.map(section => (
-          <div>{section.title}</div>
+          <div key={`class.${classEntity.id}.section.${section.id}`}>{section.title}</div>
         ))}
       </div>
     </Card>
