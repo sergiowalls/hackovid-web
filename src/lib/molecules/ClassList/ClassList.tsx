@@ -12,20 +12,8 @@ import { ClassHeader } from '../../../model/ClassHeader'
 import { ClassSection } from '../../../model/ClassSection'
 
 import './ClassList.scss'
-
-interface ClassResponse {
-  id: number
-  title: string
-  teacher: number
-  created_at: string
-  sections: {
-    id: number,
-    title: string,
-    description: string,
-    learning_unit: number,
-    resources: any[]
-  }[]
-}
+import { ClassResponse } from '../../../model/http/ClassResponse'
+import { assembleClassFrom } from '../../services/responseAssemblers'
 
 interface ClassListProps {
   filters: ClassFilters
@@ -46,18 +34,7 @@ const ClassList = ({
       .then(response => {
         console.log(response.data)
 
-        setClasses(response.data.map(classResponse => new Class(
-          classResponse.id,
-          new ClassHeader(
-            classResponse.title,
-            []
-          ),
-          classResponse.sections.map(section => new ClassSection(
-            section.id,
-            section.title,
-            section.description
-          ))
-        )))
+        setClasses(response.data.map(assembleClassFrom))
       })
       .catch(() => {
         dispatch(

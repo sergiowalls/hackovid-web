@@ -24,6 +24,7 @@ import { store } from './store'
 
 import './App.scss'
 import { LoadBaseAssets } from './lib/LoadBaseAssets'
+import { ClassPage } from './pages/ClassPage/ClassPage'
 
 FocusStyleManager.onlyShowFocusOnTabs()
 
@@ -40,6 +41,9 @@ const App = () => {
             </Route>
             <Route exact path="/register">
               <RegisterPage />
+            </Route>
+            <Route exact path="/classes/view">
+              <ClassPage />
             </Route>
             <Route exact path="/classes/new">
               <CreateClassPage />

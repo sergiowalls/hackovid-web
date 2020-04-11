@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Elevation } from '@blueprintjs/core'
+import { useHistory } from 'react-router-dom'
 
 import { Class } from '../../../model/Class'
 
@@ -10,9 +11,14 @@ interface ClassListItemProps {
 }
 
 const ClassListItem = ({ classEntity }: ClassListItemProps) => {
+  const history = useHistory()
 
   return (
-    <Card className="class-list-item" elevation={Elevation.TWO}>
+    <Card
+      className="class-list-item"
+      elevation={Elevation.TWO}
+      onClick={() => history.push(`/classes/view?classId=${classEntity.id}`)}
+    >
       <div className="class-list-item__header">
         <div className="class-list-item__header__left">
           <div className="class-list-item__title">{classEntity.header.title}</div>
