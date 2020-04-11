@@ -28,7 +28,7 @@ const RegisterPage = () => {
   const register = () => {
     setIsRegistering(true)
 
-    axios.post('http://aula.centralyze.io:1337/learning/user', {
+    axios.post('http://aula.centralyze.io:1337/learning/users', {
       username,
       password,
       email: username,
