@@ -89,8 +89,6 @@ const EditableClass = ({
           intent={Intent.PRIMARY}
         >Afegir secció</Button>
       </div>
-
-      <h2 className="editable-class__part-title">Recursos</h2>
     </SafePageView>
   )
 }

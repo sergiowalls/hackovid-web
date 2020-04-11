@@ -1,8 +1,8 @@
 
 $pt-intent-primary: #633a82;
-$pt-intent-success: #40e0d0;
+$pt-intent-success: #72b5b7;
 $pt-intent-warning: yellow;
-$pt-intent-danger: red;
+$pt-intent-danger: rgb(230, 50, 50);
 
 $pt-intent-colors: (
         "primary": $pt-intent-primary,
@@ -19,10 +19,12 @@ $pt-intent-text-colors: (
 );
 
 $button-intents: (
-        "primary": ($pt-intent-primary, darken($pt-intent-primary, 30), darken($pt-intent-primary, 70)),
-        "success": ($pt-intent-success, darken($pt-intent-success, 30), darken($pt-intent-success, 70)),
-        "warning": ($pt-intent-warning, darken($pt-intent-warning, 30), darken($pt-intent-warning, 70)),
-        "danger": ($pt-intent-danger, darken($pt-intent-danger, 30), darken($pt-intent-danger, 70))
+        "primary": ($pt-intent-primary, lighten($pt-intent-primary, 20), lighten($pt-intent-primary, 50)),
+        "success": ($pt-intent-success, lighten($pt-intent-success, 20), #40e0d0),
+        "warning": ($pt-intent-warning, lighten($pt-intent-warning, 20), lighten($pt-intent-warning, 50)),
+        "danger": ($pt-intent-danger, rgb(250, 50, 50), lighten($pt-intent-danger, 50))
 );
+
+$tab-color-selected: $pt-intent-success;
 
 $navbar-background-color: #633a82;

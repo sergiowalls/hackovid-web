@@ -58,13 +58,13 @@ const ClassesPage = () => {
                 selectedTabId={`classes-tab-${selectedTab}`}
                 large={true}
               >
-                <Tab id="classes-tab-all" title="Totes les classes" />
+                <Tab id="classes-tab-all" className="classes-page__tab" title="Totes les classes" />
 
                 <Tabs.Expander />
                 <Tabs.Expander />
                 <Tabs.Expander />
 
-                <Tab id="classes-tab-mine" title="Les meves classes" />
+                <Tab id="classes-tab-mine" className="classes-page__tab" title="Les meves classes" />
               </Tabs>
             </div>
 
@@ -73,9 +73,15 @@ const ClassesPage = () => {
               {selectedTab === 'mine' && <>Les meves classes</>}
             </h2>
 
-            {renderClassList(selectedTab)}
+            <div className="classes-page__list">
+              {renderClassList(selectedTab)}
+            </div>
 
-            <FloatingActionButton icon="plus" onClick={() => history.push('/classes/new')} />
+            <FloatingActionButton
+              icon="plus"
+              onClick={() => history.push('/classes/new')}
+              popoverText="Crear classe"
+            />
             </SafePageView>
           </Col>
         </Row>

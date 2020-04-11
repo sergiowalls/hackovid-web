@@ -18,6 +18,7 @@ import { Success } from '../../lib/helpers/Try'
 import urls from '../../lib/helpers/urls'
 
 import './CreateClassPage.scss'
+import { FloatingActionButton } from '../../lib/atoms/FloatingActionButton/FloatingActionButton'
 
 const CreateClassPage = () => {
   const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew())
@@ -55,14 +56,15 @@ const CreateClassPage = () => {
       <Container leftMarginClass="create-class__container__left-margin">
         <Row>
           <Col md={8} className="create-class__editable-column">
-            <Button
-              intent={Intent.SUCCESS}
-              onClick={createClass}
-            >Guardar</Button>
-
             <EditableClass
               classEntity={classEntity}
               onChange={setClassEntity}
+            />
+
+            <FloatingActionButton
+              icon="floppy-disk"
+              onClick={createClass}
+              popoverText="Guardar"
             />
           </Col>
           <Col md={4} className="create-class__favorites-column">

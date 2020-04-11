@@ -6,29 +6,35 @@ import './FloatingActionButton.scss'
 interface FloatingActionButtonProps {
   icon: IconName
   onClick?: () => void
+  popoverText?: string
 }
 
 const FloatingActionButton = ({
   icon,
-  onClick
+  onClick,
+  popoverText
 }: FloatingActionButtonProps) => {
   const [ isOpen, setIsOpen ] = useState<boolean>(false)
 
   return (
     <div className="floating-action-button__container">
-      <Popover isOpen={isOpen}>
-        <div
-          className="floating-action-button"
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={() => setIsOpen(false)}
-          onClick={onClick}
-        >
-          <Icon icon={icon} iconSize={30} />
-        </div>
-        <div className="floating-action-button__popover">
-          Crear classe
-        </div>
-      </Popover>
+      <div className="floating-action-button__fixed">
+        <Popover isOpen={isOpen}>
+          <div
+            className="floating-action-button"
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
+            onClick={onClick}
+          >
+            <Icon icon={icon} iconSize={25} />
+          </div>
+          {popoverText &&
+            <div className="floating-action-button__popover">
+              {popoverText}
+            </div>
+          }
+        </Popover>
+      </div>
     </div>
   )
 }

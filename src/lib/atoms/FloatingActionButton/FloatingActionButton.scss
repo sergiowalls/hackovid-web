@@ -1,29 +1,33 @@
 @import "../../styles/blueprint-overrides";
 
 .floating-action-button__container {
-  position: fixed;
-  bottom: 50px;
+  position: absolute;
   right: 50px;
 
-  .floating-action-button {
-    width: 70px;
-    height: 70px;
+  .floating-action-button__fixed {
+    position: fixed;
+    bottom: 50px;
 
-    border-radius: 50%;
-    box-shadow: 0 6px 10px 0 #666;
+    .floating-action-button {
+      width: 70px;
+      height: 70px;
 
-    background-color: $pt-intent-primary;
-    color: white;
+      border-radius: 50%;
+      box-shadow: 0 6px 10px 0 #666;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+      background-color: $pt-intent-primary;
+      color: white;
 
-    &:hover {
-      box-shadow: 0 6px 14px 0 #666;
-      transform: scale(1.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      cursor: pointer;
+      &:hover {
+        box-shadow: 0 6px 14px 0 #666;
+        transform: scale(1.05);
+
+        cursor: pointer;
+      }
     }
   }
 }
