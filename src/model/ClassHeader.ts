@@ -1,8 +1,7 @@
 
 class ClassHeader {
   constructor(
-    public title: string,
-    public tags: string[]
+    public title: string
   ) {}
 }
 

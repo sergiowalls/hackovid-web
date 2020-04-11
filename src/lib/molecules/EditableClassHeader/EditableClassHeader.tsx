@@ -34,11 +34,10 @@ const EditableClassHeader = ({
   onChange
 }: EditableClassHeaderProps) => {
   const [ title, setTitle ] = useState<string>(header.title)
-  const [ tags, setTags ] = useState<string[]>(header.tags)
 
   useEffect(() => {
-    onChange(new ClassHeader(title, tags))
-  }, [title, tags])
+    onChange(new ClassHeader(title))
+  }, [title])
 
   return (
     <Card elevation={Elevation.ONE} className="editable-class-header">
@@ -56,15 +55,6 @@ const EditableClassHeader = ({
       <InputWrapper label="Curs">
         Curs
       </InputWrapper>
-
-      <InputWrapper label="Tags">
-        <TagInput
-          values={tags}
-          onAdd={values => setTags([...tags, ...values])}
-          fill={true}
-        />
-      </InputWrapper>
-
     </Card>
   )
 }

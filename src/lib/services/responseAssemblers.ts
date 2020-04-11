@@ -7,8 +7,7 @@ export const assembleClassFrom = (classResponse: ClassResponse) => {
   return new Class(
     classResponse.id,
     new ClassHeader(
-      classResponse.title,
-      []
+      classResponse.title
     ),
     classResponse.sections.map(section => new ClassSection(
       section.id,

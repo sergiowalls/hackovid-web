@@ -11,7 +11,7 @@ class Class {
   static instantiateNew = () => {
     return new Class(
       0,
-      new ClassHeader('', []),
+      new ClassHeader(''),
       [new ClassSection(0, '', '')]
     )
   }
