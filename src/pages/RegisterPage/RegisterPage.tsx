@@ -32,7 +32,7 @@ const RegisterPage = () => {
       username,
       password,
       email: username,
-      firstName: name,
+      first_name: name,
       institution,
       subjects: [],
       courses: []
