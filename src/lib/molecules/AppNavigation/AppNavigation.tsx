@@ -1,14 +1,14 @@
 import React from 'react'
-import { Alignment, Button, Intent, Navbar } from '@blueprintjs/core'
+import { Alignment, Navbar } from '@blueprintjs/core'
 import { useStoreon } from 'storeon/react'
 
 import { Container } from '../../atoms/Container/Container'
 import { AppMenuItem } from '../AppMenuItem/AppMenuItem'
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
+import { AppMenuButton } from '../AppMenuButton/AppMenuButton'
 
 import './AppNavigation.scss'
-import { AppMenuButton } from '../AppMenuButton/AppMenuButton'
 
 const AppNavigation = () => {
   const { dispatch, auth: { isAuthenticated } } = useStoreon<State, Events>('auth')

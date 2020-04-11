@@ -1,38 +1,35 @@
 import { LearningUnit } from './LearningUnit'
 
-interface Course {
+export interface INestedMenuEntry {
   name: string,
-  courses: {
-    name: string,
-    subjects: string[]
-  }[]
+  subentries?: INestedMenuEntry[]
 }
 
-const courses: Course[] = [
+export const courses: INestedMenuEntry[] = [
   {
     name: 'Primària',
-    courses: []
+    subentries: []
   },
   {
     name: 'Secundària',
-    courses: [
+    subentries: [
       {
         name: '1r ESO',
-        subjects: [
-          'Matemàtiques',
-          'Ciències socials'
+        subentries: [
+          { name: 'Matemàtiques' },
+          { name: 'Ciències socials' }
         ]
       },
       {
         name: '2n ESO',
-        subjects: [
-          'Matemàtiques'
+        subentries: [
+          { name: 'Matemàtiques' }
         ]
       },
       {
         name: '3r ESO',
-        subjects: [
-          'Matemàtiques'
+        subentries: [
+          { name: 'Matemàtiques' }
         ]
       }
     ]

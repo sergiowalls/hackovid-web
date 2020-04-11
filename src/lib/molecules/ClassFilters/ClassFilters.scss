@@ -1,4 +1,16 @@
 
 .class-filters {
+  font-size: 1.9em;
+}
 
+.nested-menu-entry {
+  font-size: 0.85em;
+
+  & > .nested-menu-entry__name {
+
+  }
+
+  & > .nested-menu-entry__subentries {
+    margin-left: 0.8em;
+  }
 }

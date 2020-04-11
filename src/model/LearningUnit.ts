@@ -1,8 +1,8 @@
 
 export class LearningUnit {
   constructor(
-    title: string,
-    course: string,
-    subject: string
+    public title: string,
+    public course: string,
+    public subject: string
   ) {}
 }
