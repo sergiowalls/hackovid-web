@@ -1,30 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useStoreon } from 'storeon/react'
 import { Checkbox } from '@blueprintjs/core'
 
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
 import { courses, INestedMenuEntry } from '../../../model/Filters'
+import { LearningUnit } from '../../../model/LearningUnit'
 
 import './ClassFilters.scss'
 
-interface NestedMenuEntryProps {
-  entry: INestedMenuEntry
-  depth: number
+interface INestedEntryState {
+  name: string
+  id: string
+  checked: boolean
+  subentries?: INestedEntryState[]
 }
 
-const NestedMenuEntry = ({ entry, depth }: NestedMenuEntryProps) => {
+interface NestedMenuEntryProps {
+  entry: INestedEntryState
+  onClick: (name: string) => void
+}
+
+const NestedMenuEntry = ({ entry, onClick }: NestedMenuEntryProps) => {
+  if (entry.checked) console.log(`Checked: ${entry.id}`)
   return (
     <div className="nested-menu-entry">
       <Checkbox
-        checked={true}
+        checked={entry.checked}
         label={entry.name}
-        onChange={() => {}}
-        className={`nested-menu-entry__name depth-${depth}`}
+        onClick={() => onClick(entry.id)}
+        className="nested-menu-entry__name"
       />
       {entry.subentries &&
         <div className="nested-menu-entry__subentries">
-          {entry.subentries.map(subentry => <NestedMenuEntry entry={subentry} depth={depth} />)}
+          {entry.subentries.map(subentry => <NestedMenuEntry key={subentry.id} entry={subentry} onClick={onClick} />)}
         </div>
       }
     </div>
@@ -34,32 +43,70 @@ const NestedMenuEntry = ({ entry, depth }: NestedMenuEntryProps) => {
 const ClassFilters = () => {
   const { learning: { learningUnits } } = useStoreon<State, Events>('learning')
 
-  const getLearningUnitsFor = (parent?: string, superParent?: string): INestedMenuEntry[] => {
+  const [ entries , setEntries ] = useState<INestedEntryState[]>([])
+
+  const getLearningUnitsFor = (learningUnits: LearningUnit[], prefixId: string, parent?: string, superParent?: string): INestedEntryState[] => {
     return learningUnits.filter(learningUnit =>
       learningUnit.course === superParent && learningUnit.subject === parent
-    ).map(learningUnit => ({
-      name: learningUnit.title
+    ).map((learningUnit) => ({
+      name: learningUnit.title,
+      checked: false,
+      id: `${prefixId}.learningunit.${learningUnit.id}`
     }))
   }
 
-  const getNestedEntryCopy = (nestedEntry: INestedMenuEntry, parent?: string): INestedMenuEntry => {
-    const learningUnits = getLearningUnitsFor(nestedEntry.name, parent)
+  const getNestedEntryCopy = (nestedEntry: INestedMenuEntry, id: string, parent?: string): INestedEntryState => {
+    const filteredUnits = getLearningUnitsFor(learningUnits, id, nestedEntry.name, parent)
 
     const subentries = nestedEntry.subentries
-      ? nestedEntry.subentries.map(entry => getNestedEntryCopy(entry, nestedEntry.name))
-      : (learningUnits ? learningUnits : undefined)
+      ? nestedEntry.subentries.map((entry, index) =>
+        getNestedEntryCopy(entry, `${id}.node.${index}`, nestedEntry.name)
+      )
+      : (filteredUnits ? filteredUnits : undefined)
 
     return {
       name: nestedEntry.name,
+      checked: false,
+      id,
       subentries
     }
   }
 
-  const entries = courses.map(entry => getNestedEntryCopy(entry))
+  useEffect(() => {
+    const newEntries = courses.map((entry, index) =>
+      getNestedEntryCopy(entry, `root.${index}`)
+    )
+    setEntries(newEntries)
+  }, [])
+
+  const modifyState = (currentEntry: INestedEntryState, id: string): INestedEntryState => {
+    let result: INestedEntryState = {
+      ...currentEntry
+    }
+
+    if (currentEntry.id === id) {
+      console.log("entry found")
+      result.checked = !currentEntry.checked
+    }
+
+    result.subentries = currentEntry.subentries
+      ? currentEntry.subentries.map(entry => modifyState(entry, id))
+      : undefined
+
+    return result
+  }
+
+  const handleOnClick = (id: string) => {
+    const newEntries = entries.map(entry => modifyState(entry, id))
+
+    console.log(newEntries)
+
+    setEntries(newEntries)
+  }
 
   return (
     <div className="class-filters">
-      {entries.map(entry => <NestedMenuEntry entry={entry} depth={0} />)}
+      {entries.map(entry => <NestedMenuEntry key={entry.id} entry={entry} onClick={handleOnClick} />)}
     </div>
   )
 }
