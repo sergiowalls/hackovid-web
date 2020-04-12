@@ -17,6 +17,7 @@ import urls from '../../lib/helpers/urls'
 
 import './CreateClassPage.scss'
 import { FloatingActionButton } from '../../lib/atoms/FloatingActionButton/FloatingActionButton'
+import {MySavedSections} from "../../lib/molecules/MySavedSections/MySavedSections";
 
 const CreateClassPage = () => {
   const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew())
@@ -45,6 +46,10 @@ const CreateClassPage = () => {
     return (
       <SafePageView>
         <h2>Seccions guardades</h2>
+        <MySavedSections/>
+
+
+
       </SafePageView>
     )
   }

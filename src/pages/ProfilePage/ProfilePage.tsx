@@ -10,6 +10,8 @@ const ProfilePage = () => {
       <SafePageView>
         <Container>
           Profile
+
+
         </Container>
       </SafePageView>
     </Page>
