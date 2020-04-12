@@ -18,14 +18,19 @@ import urls from '../../lib/helpers/urls'
 import './CreateClassPage.scss'
 import { FloatingActionButton } from '../../lib/atoms/FloatingActionButton/FloatingActionButton'
 import {MySavedSections} from "../../lib/molecules/MySavedSections/MySavedSections";
+import { useHistory } from 'react-router-dom'
+import {ClassResponse} from "../../model/http/ClassResponse";
+import {assembleClassFrom} from "../../lib/services/responseAssemblers";
 
 const CreateClassPage = () => {
   const { dispatch, auth, learning: { learningUnits } } = useStoreon<State, Events>('auth', 'learning')
 
   const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew(auth.user!!, learningUnits[0]))
 
+  let history = useHistory();
+
   const createClass = async () => {
-    const responseTry = await http.post<any>(urls.class.create(), {
+    const responseTry = await http.post<ClassResponse>(urls.class.create(), {
       title: classEntity.header.title,
       learning_unit: 1,
       sections: classEntity.sections.map((section) => ({
@@ -38,6 +43,9 @@ const CreateClassPage = () => {
 
     if (responseTry instanceof Success) {
       dispatch('alert/showAlert', new Alert('Classe creada correctament', 'success'))
+      let response = responseTry as Success<ClassResponse>;
+      const classId = assembleClassFrom(response.value, learningUnits).id;
+      history.push(`/classes/view?classId=${classId}`)
     } else {
       dispatch('alert/showAlert', new Alert('Hi ha hagut un error en crear la classe.', 'error'))
     }
