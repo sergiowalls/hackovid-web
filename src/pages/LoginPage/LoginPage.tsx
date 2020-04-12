@@ -96,7 +96,7 @@ const LoginPage = () => {
               />
             </FormGroup>
             <FormGroup
-              label="Contrassenya"
+              label="Contrasenya"
               labelFor="password-input"
             >
               <InputGroup
