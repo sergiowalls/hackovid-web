@@ -39,8 +39,7 @@ const RegisterPage = () => {
         email: username,
         first_name: name,
         institution,
-        subjects: [],
-        courses: []
+        learning_units: []
       })
 
       if (registerResponseTry instanceof Success) {
