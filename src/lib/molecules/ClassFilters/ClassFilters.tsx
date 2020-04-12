@@ -9,10 +9,16 @@ import { LearningUnit } from '../../../model/LearningUnit'
 
 import './ClassFilters.scss'
 
+enum CheckedState {
+  Checked,
+  Half,
+  Unchecked
+}
+
 interface INestedEntryState {
   name: string
   id: string
-  checked: boolean
+  checked: CheckedState
   subentries?: INestedEntryState[]
 }
 
@@ -22,11 +28,13 @@ interface NestedMenuEntryProps {
 }
 
 const NestedMenuEntry = ({ entry, onClick }: NestedMenuEntryProps) => {
-  if (entry.checked) console.log(`Checked: ${entry.id}`)
+  if (entry.checked === CheckedState.Checked) console.log(`Checked: ${entry.id}`)
+  if (entry.checked === CheckedState.Half) console.log(`Half: ${entry.id}`)
   return (
     <div className="nested-menu-entry">
       <Checkbox
-        checked={entry.checked}
+        checked={entry.checked === CheckedState.Checked}
+        indeterminate={entry.checked === CheckedState.Half}
         label={entry.name}
         onClick={() => onClick(entry.id)}
         className="nested-menu-entry__name"
@@ -50,7 +58,7 @@ const ClassFilters = () => {
       learningUnit.course === superParent && learningUnit.subject === parent
     ).map((learningUnit) => ({
       name: learningUnit.title,
-      checked: false,
+      checked: CheckedState.Unchecked,
       id: `${prefixId}.learningunit.${learningUnit.id}`
     }))
   }
@@ -66,7 +74,7 @@ const ClassFilters = () => {
 
     return {
       name: nestedEntry.name,
-      checked: false,
+      checked: CheckedState.Unchecked,
       id,
       subentries
     }
@@ -86,7 +94,9 @@ const ClassFilters = () => {
 
     if (currentEntry.id === id) {
       console.log("entry found")
-      result.checked = !currentEntry.checked
+      result.checked = currentEntry.checked !== CheckedState.Checked
+        ? CheckedState.Checked
+        : CheckedState.Unchecked
     }
 
     result.subentries = currentEntry.subentries
