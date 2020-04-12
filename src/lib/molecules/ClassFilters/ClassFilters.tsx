@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useStoreon } from 'storeon/react'
-import { Checkbox } from '@blueprintjs/core'
 
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
@@ -8,12 +7,7 @@ import { courses, INestedMenuEntry } from '../../../model/Filters'
 import { LearningUnit } from '../../../model/LearningUnit'
 
 import './ClassFilters.scss'
-
-enum CheckedState {
-  Checked,
-  Half,
-  Unchecked
-}
+import { Checkbox, CheckedState } from '../../atoms/Checkbox/Checkbox'
 
 interface INestedEntryState {
   name: string
@@ -33,8 +27,7 @@ const NestedMenuEntry = ({ entry, onClick }: NestedMenuEntryProps) => {
   return (
     <div className="nested-menu-entry">
       <Checkbox
-        checked={entry.checked === CheckedState.Checked}
-        indeterminate={entry.checked === CheckedState.Half}
+        checked={entry.checked}
         label={entry.name}
         onClick={() => onClick(entry.id)}
         className="nested-menu-entry__name"
