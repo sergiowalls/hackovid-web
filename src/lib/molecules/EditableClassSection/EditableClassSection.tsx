@@ -15,6 +15,7 @@ interface CKEditorEditorInterface {
   keystrokes: {
     set: (key: string | (string | number)[], handler: (keyEvtData: any, cancel: any) => void) => void
   }
+  isReadOnly: boolean
 }
 
 interface EditableClassSectionProps {
@@ -41,60 +42,39 @@ const EditableClassSection = ({
     ))
   }, [titleData, contentData])
 
-  const renderContent = () => {
-    return (
-      <>
-        <div className="editable-class-section__header">
-          <div className="editable-class-section__title">
-            <EditableText
-              placeholder="Títol de la secció..."
-              value={titleData}
-              onChange={setTitleData}
-              className="editable-class-section__title__editable"
-              disabled={viewType !== ClassViewType.Editable}
-            />
-          </div>
-
-          <div className="editable-class-section__header__right">
-            {renderRight}
-          </div>
-        </div>
-        {viewType === ClassViewType.Editable &&
-        <div className="editable-class-section__editor">
-            <CKEditor
-                config={{ language: 'ca' }}
-                editor={InlineEditor}
-                data={contentData}
-                onChange={(event: any, editor: CKEditorEditorInterface) => {
-                  setContentData(editor.getData())
-                }}
-            />
-        </div>
-        }
-        {viewType !== ClassViewType.Editable &&
-        <div
-            className="editable-class-section__content"
-            dangerouslySetInnerHTML={{ __html: contentData }}
-        />
-        }
-      </>
-    )
-  }
-
-  if (viewType === ClassViewType.Viewable) {
-    return (
-      <div className="editable-class-section">
-        {renderContent()}
-      </div>
-    )
-  }
-
   return (
     <Card
       className="editable-class-section"
       elevation={Elevation.ONE}
     >
-      {renderContent()}
+      <div className="editable-class-section__header">
+        <div className="editable-class-section__title">
+          <EditableText
+            placeholder="Títol de la secció..."
+            value={titleData}
+            onChange={setTitleData}
+            className="editable-class-section__title__editable"
+            disabled={viewType !== ClassViewType.Editable}
+          />
+        </div>
+
+        <div className="editable-class-section__header__right">
+          {renderRight}
+        </div>
+      </div>
+      <div className="editable-class-section__editor">
+        <CKEditor
+          config={{ language: 'ca' }}
+          editor={InlineEditor}
+          data={contentData}
+          onInit={(editor: CKEditorEditorInterface) => {
+            editor.isReadOnly = viewType !== ClassViewType.Editable
+          }}
+          onChange={(event: any, editor: CKEditorEditorInterface) => {
+            setContentData(editor.getData())
+          }}
+        />
+      </div>
     </Card>
   )
 }
