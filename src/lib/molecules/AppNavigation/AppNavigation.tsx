@@ -9,9 +9,11 @@ import { Events } from '../../../store/event/Events'
 import { AppMenuButton } from '../AppMenuButton/AppMenuButton'
 
 import './AppNavigation.scss'
+import { useHistory } from 'react-router-dom'
 
 const AppNavigation = () => {
   const { dispatch, auth: { isAuthenticated } } = useStoreon<State, Events>('auth')
+  const history = useHistory()
 
   if (!isAuthenticated) {
     return null
@@ -36,7 +38,10 @@ const AppNavigation = () => {
         <Navbar.Group align={Alignment.RIGHT}>
           <AppMenuButton
             icon="log-out"
-            onClick={() => dispatch('auth/logout')}
+            onClick={() => {
+              dispatch('auth/logout');
+              history.push('/')
+            }}
           >
             Sortir
           </AppMenuButton>
