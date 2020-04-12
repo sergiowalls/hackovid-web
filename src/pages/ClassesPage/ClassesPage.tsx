@@ -27,7 +27,7 @@ const ClassesPage = () => {
       <SafePageView>
         <h2>Filtres</h2>
 
-        <ClassFilters onChange={setFilters} />
+        <ClassFilters onChange={setFilters} onlyClickOne={false} />
       </SafePageView>
     )
   }

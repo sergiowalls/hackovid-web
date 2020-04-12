@@ -20,22 +20,35 @@ interface INestedEntryState {
 interface NestedMenuEntryProps {
   entry: INestedEntryState
   onClick: (name: string) => void
+  hideCheckboxes: boolean
 }
 
-const NestedMenuEntry = ({ entry, onClick }: NestedMenuEntryProps) => {
+const NestedMenuEntry = ({ entry, onClick, hideCheckboxes }: NestedMenuEntryProps) => {
   if (entry.checked === CheckedState.Checked) console.log(`Checked: ${entry.id}`)
   if (entry.checked === CheckedState.Half) console.log(`Half: ${entry.id}`)
   return (
     <div className="nested-menu-entry">
-      <Checkbox
-        checked={entry.checked}
-        label={entry.name}
-        onClick={() => onClick(entry.id)}
-        className="nested-menu-entry__name"
-      />
+      {entry.isLearningUnit &&
+        <>
+          {hideCheckboxes &&
+            <div className="nested-menu-entry__name">{entry.name}</div>
+          }
+          {!hideCheckboxes &&
+            <Checkbox
+              checked={entry.checked}
+              label={entry.name}
+              onClick={() => onClick(entry.id)}
+              className="nested-menu-entry__name"
+            />
+          }
+        </>
+      }
+      {!entry.isLearningUnit &&
+        <div className="nested-menu-entry__name">{entry.name}</div>
+      }
       {entry.subentries &&
         <div className="nested-menu-entry__subentries">
-          {entry.subentries.map(subentry => <NestedMenuEntry key={subentry.id} entry={subentry} onClick={onClick} />)}
+          {entry.subentries.map(subentry => <NestedMenuEntry key={subentry.id} entry={subentry} onClick={onClick} hideCheckboxes={hideCheckboxes} />)}
         </div>
       }
     </div>
@@ -44,9 +57,11 @@ const NestedMenuEntry = ({ entry, onClick }: NestedMenuEntryProps) => {
 
 interface ClassFiltersProps {
   onChange: (filters: Filters) => void
+  onlyClickOne: boolean
+  onClickOne?: (learningUnit: LearningUnit) => void
 }
 
-const ClassFilters = ({ onChange }: ClassFiltersProps) => {
+const ClassFilters = ({ onChange, onClickOne, onlyClickOne }: ClassFiltersProps) => {
   const { learning: { learningUnits } } = useStoreon<State, Events>('learning')
 
   const [ entries , setEntries ] = useState<INestedEntryState[]>([])
@@ -140,6 +155,14 @@ const ClassFilters = ({ onChange }: ClassFiltersProps) => {
   }
 
   const handleOnClick = (id: string) => {
+    if (onlyClickOne && onClickOne) {
+      const learningUnitId = parseInt(id.substring(id.lastIndexOf(".") + 1))
+      const learningUnit = learningUnits.filter(l => l.id === learningUnitId)[0]
+      if (learningUnit) {
+        onClickOne(learningUnit)
+      }
+    }
+
     const newEntries = entries.map(entry => modifyState(entry, id))
 
     console.log(newEntries)
@@ -149,7 +172,7 @@ const ClassFilters = ({ onChange }: ClassFiltersProps) => {
 
   return (
     <div className="class-filters">
-      {entries.map(entry => <NestedMenuEntry key={entry.id} entry={entry} onClick={handleOnClick} />)}
+      {entries.map(entry => <NestedMenuEntry key={entry.id} entry={entry} onClick={handleOnClick} hideCheckboxes={onlyClickOne} />)}
     </div>
   )
 }
