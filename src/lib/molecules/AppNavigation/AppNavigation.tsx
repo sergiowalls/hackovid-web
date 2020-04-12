@@ -1,6 +1,7 @@
 import React from 'react'
 import { Alignment, Navbar } from '@blueprintjs/core'
 import { useStoreon } from 'storeon/react'
+import { useHistory } from 'react-router-dom'
 
 import { Container } from '../../atoms/Container/Container'
 import { AppMenuItem } from '../AppMenuItem/AppMenuItem'
@@ -8,8 +9,9 @@ import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
 import { AppMenuButton } from '../AppMenuButton/AppMenuButton'
 
+import { ReactComponent as Logo } from './logo.svg'
+
 import './AppNavigation.scss'
-import { useHistory } from 'react-router-dom'
 
 const AppNavigation = () => {
   const { dispatch, auth: { isAuthenticated } } = useStoreon<State, Events>('auth')
@@ -23,7 +25,9 @@ const AppNavigation = () => {
     <Navbar className="app-navigation">
       <Container>
         <Navbar.Group align={Alignment.LEFT}>
-          <Navbar.Heading>Aula</Navbar.Heading>
+          <Navbar.Heading className="logo">
+            <Logo />
+          </Navbar.Heading>
 
           <Navbar.Divider />
 

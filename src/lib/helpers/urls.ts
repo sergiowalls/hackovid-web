@@ -1,4 +1,4 @@
-import { Filters } from '../../model/Filters'
+import { LearningUnit } from '../../model/LearningUnit'
 
 const baseUrl = "http://aula.centralyze.io:1337"
 
@@ -9,9 +9,12 @@ export default {
   login: () => `${baseUrl}/api-token-auth/`,
   register: () => `${baseUrl}/learning/users`,
   class: {
-    getByFilter: (filters: Filters) => {
+    getByLearningUnit: (learningUnit: LearningUnit) => {
       return `${baseUrl}/learning/classes`
-        + (filters.learningUnits ? '?learning-unit=1' : '')
+        + `?learning-unit=${learningUnit.id}`
+    },
+    getAll: () => {
+      return `${baseUrl}/learning/classes`
     },
     create: () => `${baseUrl}/learning/classes`,
     getById: (classId: string | null) => `${baseUrl}/learning/classes/${classId}`

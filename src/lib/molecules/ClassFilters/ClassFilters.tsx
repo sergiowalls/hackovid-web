@@ -24,8 +24,6 @@ interface NestedMenuEntryProps {
 }
 
 const NestedMenuEntry = ({ entry, onClick, hideCheckboxes }: NestedMenuEntryProps) => {
-  if (entry.checked === CheckedState.Checked) console.log(`Checked: ${entry.id}`)
-  if (entry.checked === CheckedState.Half) console.log(`Half: ${entry.id}`)
   return (
     <div className="nested-menu-entry">
       {entry.isLearningUnit &&
@@ -76,6 +74,8 @@ const ClassFilters = ({ onChange, onClickOne, onlyClickOne }: ClassFiltersProps)
         if (learningUnit) {
           result.push(learningUnit)
         }
+      } else if (currentEntry.subentries) {
+        result = [...result, ...getFilteredUnits(currentEntry.subentries)]
       }
     })
 
@@ -145,13 +145,12 @@ const ClassFilters = ({ onChange, onClickOne, onlyClickOne }: ClassFiltersProps)
     result.subentries = currentEntry.subentries
       ? currentEntry.subentries.map(entry => modifyState(entry, id))
       : undefined
-
-    result.checked = (result.subentries !== undefined && result.subentries.length > 0)
-      ? (result.subentries.map(isFullyChecked).filter(b => !b).length === 0 ? CheckedState.Checked : CheckedState.Unchecked)
-      : (() => {
-        console.log(`${result.id}: ${result.checked}`)
-        return result.checked
-      })()
+    //
+    // result.checked = (result.subentries !== undefined && result.subentries.length > 0)
+    //   ? (result.subentries.map(isFullyChecked).filter(b => !b).length === 0 ? CheckedState.Checked : CheckedState.Unchecked)
+    //   : (() => {
+    //     return result.checked
+    //   })()
 
     return result
   }
@@ -165,8 +164,6 @@ const ClassFilters = ({ onChange, onClickOne, onlyClickOne }: ClassFiltersProps)
       }
     } else {
       const newEntries = entries.map(entry => modifyState(entry, id))
-
-      console.log(newEntries)
 
       setEntries(newEntries)
     }
