@@ -103,7 +103,7 @@ const RegisterPage = () => {
             >
               <InputGroup
                 id="password-input"
-                placeholder="****"
+                placeholder="********"
                 type="password"
                 value={password}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
@@ -115,7 +115,7 @@ const RegisterPage = () => {
             >
               <InputGroup
                 id="name-input"
-                placeholder="Pau Torrents"
+                placeholder="Nom i cognoms"
                 value={name}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
               />
@@ -126,7 +126,7 @@ const RegisterPage = () => {
             >
               <InputGroup
                 id="institution-input"
-                placeholder="Escola Pompeu Fabra"
+                placeholder="Nom de la institució"
                 value={institution}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => setInstitution(event.target.value)}
               />

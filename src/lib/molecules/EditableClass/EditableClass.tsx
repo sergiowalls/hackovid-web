@@ -9,6 +9,13 @@ import { ClassHeader } from '../../../model/ClassHeader'
 import { Class, ClassViewType } from '../../../model/Class'
 
 import './EditableClass.scss'
+import http from "../../services/http";
+import urls from "../../helpers/urls";
+import {useStoreon} from "storeon/react";
+import {State} from "../../../store/state/State";
+import {Events} from "../../../store/event/Events";
+import {Success} from "../../helpers/Try";
+import {Alert} from "../../../model/Alert";
 
 interface EditableClassProps {
   classEntity: Class
@@ -26,6 +33,8 @@ const EditableClass = ({
   const [ header, setHeader ] = useState<ClassHeader>(classEntity.header)
   const [ sections, setSections ] = useState<ClassSection[]>(classEntity.sections)
   const [ openPopover, setOpenPopover ] = useState<number | null>(null)
+
+  const { dispatch, auth } = useStoreon<State,Events>('auth')
 
   useEffect(() => {
     if (onChange) onChange(new Class(classEntity.id, header, sections))
@@ -58,8 +67,14 @@ const EditableClass = ({
     setSections(sections.filter((currentSection) => currentSection.id !== section.id))
   }
 
-  const onSectionSaveClick = (section: ClassSection) => {
-    // TODO()
+  const onSectionSaveClick = async (section: ClassSection) => {
+    const responseTry = await http.post<any>(urls.savedSections.save(section.id),null, auth)
+
+    if (responseTry instanceof Success) {
+      dispatch('alert/showAlert', new Alert('Secció guardada correctament', 'success'))
+    } else {
+      dispatch('alert/showAlert', new Alert('Hi ha hagut un error en guardar la secció. Torna a provar en uns instants.', 'error'))
+    }
   }
 
   const renderSectionRight = (section: ClassSection) => {

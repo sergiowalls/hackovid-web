@@ -13,5 +13,9 @@ export default {
     create: () => `${baseUrl}/learning/classes`,
     getById: (classId: string | null) => `${baseUrl}/learning/classes/${classId}`
   },
-  learningUnits: () => `${baseUrl}/learning/learning-units`
+  learningUnits: () => `${baseUrl}/learning/learning-units`,
+  savedSections: {
+    save: (id: number)=> `${baseUrl}/learning/users/me/saved-sections/${id}/`,
+    get: ()=> `${baseUrl}/learning/users/me/saved-sections/`,
+  }
 }
