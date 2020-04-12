@@ -10,6 +10,7 @@ import moment from 'moment'
 import { useStoreon } from 'storeon/react'
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
+import {LearningUnit} from "../../../model/LearningUnit";
 
 interface InputWrapperProps {
   label?: string
@@ -33,12 +34,14 @@ interface EditableClassHeaderProps {
   header: ClassHeader
   onChange: (header: ClassHeader) => void
   viewType: ClassViewType
+  learningUnit: LearningUnit
 }
 
 const EditableClassHeader = ({
   header,
   onChange,
-  viewType
+  viewType,
+  learningUnit
 }: EditableClassHeaderProps) => {
   const [ title, setTitle ] = useState<string>(header.title)
 
@@ -66,7 +69,15 @@ const EditableClassHeader = ({
         }
 
         <InputWrapper label="Curs">
-          Curs
+          {learningUnit.course}
+        </InputWrapper>
+
+        <InputWrapper label="Matèria">
+          {learningUnit.subject}
+        </InputWrapper>
+
+        <InputWrapper label="Unitat didàctica">
+          {learningUnit.title}
         </InputWrapper>
       </>
     )

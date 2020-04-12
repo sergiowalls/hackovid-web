@@ -31,14 +31,14 @@ const NestedMenuEntry = ({ entry, onClick, hideCheckboxes }: NestedMenuEntryProp
       {entry.isLearningUnit &&
         <>
           {hideCheckboxes &&
-            <div className="nested-menu-entry__name">{entry.name}</div>
+            <div className="nested-menu-entry__name clickable" onClick={() => onClick(entry.id)}>{entry.name}</div>
           }
           {!hideCheckboxes &&
             <Checkbox
               checked={entry.checked}
               label={entry.name}
               onClick={() => onClick(entry.id)}
-              className="nested-menu-entry__name"
+              className="nested-menu-entry__name clickable"
             />
           }
         </>
@@ -56,7 +56,7 @@ const NestedMenuEntry = ({ entry, onClick, hideCheckboxes }: NestedMenuEntryProp
 }
 
 interface ClassFiltersProps {
-  onChange: (filters: Filters) => void
+  onChange?: (filters: Filters) => void
   onlyClickOne: boolean
   onClickOne?: (learningUnit: LearningUnit) => void
 }
@@ -84,7 +84,9 @@ const ClassFilters = ({ onChange, onClickOne, onlyClickOne }: ClassFiltersProps)
 
   useEffect(() => {
     const filteredUnits = getFilteredUnits(entries)
-    onChange(new Filters(filteredUnits))
+    if (onChange) {
+      onChange(new Filters(filteredUnits))
+    }
   }, [entries])
 
   const getLearningUnitsFor = (learningUnits: LearningUnit[], prefixId: string, parent?: string, superParent?: string): INestedEntryState[] => {
@@ -161,13 +163,13 @@ const ClassFilters = ({ onChange, onClickOne, onlyClickOne }: ClassFiltersProps)
       if (learningUnit) {
         onClickOne(learningUnit)
       }
+    } else {
+      const newEntries = entries.map(entry => modifyState(entry, id))
+
+      console.log(newEntries)
+
+      setEntries(newEntries)
     }
-
-    const newEntries = entries.map(entry => modifyState(entry, id))
-
-    console.log(newEntries)
-
-    setEntries(newEntries)
   }
 
   return (

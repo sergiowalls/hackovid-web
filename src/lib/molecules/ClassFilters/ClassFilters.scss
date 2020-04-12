@@ -7,7 +7,9 @@
   font-size: 0.85em;
 
   & > .nested-menu-entry__name {
-
+    &.clickable {
+      cursor: pointer;
+    }
   }
 
   & > .nested-menu-entry__subentries {

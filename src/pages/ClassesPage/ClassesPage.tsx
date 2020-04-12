@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Tab, Tabs } from '@blueprintjs/core'
+import {Overlay, Tab, Tabs} from '@blueprintjs/core'
 import { useHistory } from 'react-router-dom'
 
 import { Page } from '../../lib/molecules/Page/Page'
@@ -19,6 +19,7 @@ type ClassesTabs = 'all' | 'mine'
 const ClassesPage = () => {
   const [ selectedTab, setSelectedTab ] = useState<ClassesTabs>("all")
   const [ filters, setFilters ] = useState<Filters>(new Filters())
+  const [isModalOpen, setIsModalOpen]=useState(false)
 
   const history = useHistory()
 
@@ -83,9 +84,18 @@ const ClassesPage = () => {
 
               <FloatingActionButton
                 icon="plus"
-                onClick={() => history.push('/classes/new')}
+                onClick={() => setIsModalOpen(true)}
                 popoverText="Crear classe"
               />
+
+              <Overlay isOpen={isModalOpen} onClose={()=>setIsModalOpen(false)}>
+                <div className="learning-unit-selection">
+                  <ClassFilters onlyClickOne={true} onClickOne={(learningUnit) => {
+                    console.log(learningUnit)
+                    history.push(`classes/new?learningUnit=${learningUnit.id}`)
+                  }}/>
+                </div>
+              </Overlay>
             </SafePageView>
           </Col>
         </Row>

@@ -16,19 +16,22 @@ import {State} from "../../../store/state/State";
 import {Events} from "../../../store/event/Events";
 import {Success} from "../../helpers/Try";
 import {Alert} from "../../../model/Alert";
+import {LearningUnit} from "../../../model/LearningUnit";
 
 interface EditableClassProps {
   classEntity: Class
   onChange?: (classEntity: Class) => void
   viewType: ClassViewType
   title?: string
+  learningUnit: LearningUnit
 }
 
 const EditableClass = ({
   classEntity,
   onChange,
   viewType,
-  title
+  title,
+  learningUnit
 }: EditableClassProps) => {
   const [ header, setHeader ] = useState<ClassHeader>(classEntity.header)
   const [ sections, setSections ] = useState<ClassSection[]>(classEntity.sections)
@@ -117,6 +120,7 @@ const EditableClass = ({
         header={header}
         onChange={setHeader}
         viewType={viewType}
+        learningUnit={learningUnit}
       />
 
       {viewType !== ClassViewType.Viewable &&

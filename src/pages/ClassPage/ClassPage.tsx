@@ -60,6 +60,7 @@ const ClassPage = () => {
               <EditableClass
                 classEntity={classEntity!!}
                 viewType={auth.isAuthenticated ? ClassViewType.Saveable : ClassViewType.Viewable}
+                learningUnit={classEntity!!.learningUnit}
               />
             </div>
           )}
