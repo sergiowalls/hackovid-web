@@ -80,13 +80,18 @@ const ClassFilters = () => {
     setEntries(newEntries)
   }, [])
 
+  const isFullyChecked = (entry: INestedEntryState): boolean => {
+    if (!entry.subentries) return entry.checked === CheckedState.Checked
+
+    return entry.subentries.map(isFullyChecked).filter(b => !b).length === 0
+  }
+
   const modifyState = (currentEntry: INestedEntryState, id: string): INestedEntryState => {
     let result: INestedEntryState = {
       ...currentEntry
     }
 
     if (currentEntry.id === id) {
-      console.log("entry found")
       result.checked = currentEntry.checked !== CheckedState.Checked
         ? CheckedState.Checked
         : CheckedState.Unchecked
@@ -95,6 +100,10 @@ const ClassFilters = () => {
     result.subentries = currentEntry.subentries
       ? currentEntry.subentries.map(entry => modifyState(entry, id))
       : undefined
+
+    result.checked = result.subentries
+      ? (result.subentries.map(isFullyChecked).filter(b => !b).length === 0 ? CheckedState.Checked : CheckedState.Unchecked)
+      : result.checked
 
     return result
   }
