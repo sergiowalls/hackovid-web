@@ -1,0 +1,33 @@
+@import "../../styles/blueprint-overrides";
+
+.checkbox {
+  display: flex;
+  align-items: center;
+
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+
+  cursor: pointer;
+
+  .checkbox__icon {
+    width: 15px;
+    height: 15px;
+
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.checked {
+      background-color: $pt-intent-primary;
+    }
+  }
+
+  .checkbox__label {
+    margin-left: 0.5em;
+    flex: 1;
+  }
+}

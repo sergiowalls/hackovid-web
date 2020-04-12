@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useStoreon } from 'storeon/react'
-import { Checkbox } from '@blueprintjs/core'
 
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
@@ -8,11 +7,12 @@ import { courses, INestedMenuEntry } from '../../../model/Filters'
 import { LearningUnit } from '../../../model/LearningUnit'
 
 import './ClassFilters.scss'
+import { Checkbox, CheckedState } from '../../atoms/Checkbox/Checkbox'
 
 interface INestedEntryState {
   name: string
   id: string
-  checked: boolean
+  checked: CheckedState
   subentries?: INestedEntryState[]
 }
 
@@ -22,7 +22,8 @@ interface NestedMenuEntryProps {
 }
 
 const NestedMenuEntry = ({ entry, onClick }: NestedMenuEntryProps) => {
-  if (entry.checked) console.log(`Checked: ${entry.id}`)
+  if (entry.checked === CheckedState.Checked) console.log(`Checked: ${entry.id}`)
+  if (entry.checked === CheckedState.Half) console.log(`Half: ${entry.id}`)
   return (
     <div className="nested-menu-entry">
       <Checkbox
@@ -50,7 +51,7 @@ const ClassFilters = () => {
       learningUnit.course === superParent && learningUnit.subject === parent
     ).map((learningUnit) => ({
       name: learningUnit.title,
-      checked: false,
+      checked: CheckedState.Unchecked,
       id: `${prefixId}.learningunit.${learningUnit.id}`
     }))
   }
@@ -58,7 +59,7 @@ const ClassFilters = () => {
   const getNestedEntryCopy = (nestedEntry: INestedMenuEntry, id: string, parent?: string): INestedEntryState => {
     const filteredUnits = getLearningUnitsFor(learningUnits, id, nestedEntry.name, parent)
 
-    const subentries = nestedEntry.subentries
+    const subentries = nestedEntry.subentries !== undefined
       ? nestedEntry.subentries.map((entry, index) =>
         getNestedEntryCopy(entry, `${id}.node.${index}`, nestedEntry.name)
       )
@@ -66,7 +67,7 @@ const ClassFilters = () => {
 
     return {
       name: nestedEntry.name,
-      checked: false,
+      checked: CheckedState.Unchecked,
       id,
       subentries
     }
@@ -79,19 +80,33 @@ const ClassFilters = () => {
     setEntries(newEntries)
   }, [])
 
+  const isFullyChecked = (entry: INestedEntryState): boolean => {
+    if (!entry.subentries) return entry.checked === CheckedState.Checked
+
+    return entry.subentries.map(isFullyChecked).filter(b => !b).length === 0
+  }
+
   const modifyState = (currentEntry: INestedEntryState, id: string): INestedEntryState => {
     let result: INestedEntryState = {
       ...currentEntry
     }
 
     if (currentEntry.id === id) {
-      console.log("entry found")
-      result.checked = !currentEntry.checked
+      result.checked = currentEntry.checked !== CheckedState.Checked
+        ? CheckedState.Checked
+        : CheckedState.Unchecked
     }
 
     result.subentries = currentEntry.subentries
       ? currentEntry.subentries.map(entry => modifyState(entry, id))
       : undefined
+
+    result.checked = (result.subentries !== undefined && result.subentries.length > 0)
+      ? (result.subentries.map(isFullyChecked).filter(b => !b).length === 0 ? CheckedState.Checked : CheckedState.Unchecked)
+      : (() => {
+        console.log(`${result.id}: ${result.checked}`)
+        return result.checked
+      })()
 
     return result
   }
