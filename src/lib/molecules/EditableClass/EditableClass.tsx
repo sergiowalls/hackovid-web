@@ -81,7 +81,7 @@ const EditableClass = ({
         >
           <Popover isOpen={openPopover === section.id}>
             <Button minimal={true} intent={Intent.NONE} onClick={() => onSectionSaveClick(section)}>
-              <Icon icon="heart" />
+              <Icon icon="heart" iconSize={20} />
             </Button>
             <div className="editable-class__section__save-popover">
               Guardar secció a favorits

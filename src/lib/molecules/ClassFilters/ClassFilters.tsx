@@ -1,12 +1,12 @@
 import React from 'react'
 import { useStoreon } from 'storeon/react'
+import { Checkbox } from '@blueprintjs/core'
 
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
 import { courses, INestedMenuEntry } from '../../../model/Filters'
 
 import './ClassFilters.scss'
-import { Checkbox } from '@blueprintjs/core'
 
 interface NestedMenuEntryProps {
   entry: INestedMenuEntry
