@@ -40,7 +40,7 @@ const MySavedSections = () =>{
             }
         }
         getMySectionSaved()
-    })
+    }, [])
 
     return (
         <div>
