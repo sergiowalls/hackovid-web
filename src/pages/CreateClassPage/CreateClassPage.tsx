@@ -20,8 +20,9 @@ import { FloatingActionButton } from '../../lib/atoms/FloatingActionButton/Float
 import {MySavedSections} from "../../lib/molecules/MySavedSections/MySavedSections";
 
 const CreateClassPage = () => {
-  const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew())
-  const { dispatch, auth } = useStoreon<State, Events>('auth')
+  const { dispatch, auth, learning: { learningUnits } } = useStoreon<State, Events>('auth', 'learning')
+
+  const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew(auth.user!!, learningUnits[0]))
 
   const createClass = async () => {
     const responseTry = await http.post<any>(urls.class.create(), {

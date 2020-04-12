@@ -18,6 +18,7 @@ type ClassesTabs = 'all' | 'mine'
 
 const ClassesPage = () => {
   const [ selectedTab, setSelectedTab ] = useState<ClassesTabs>("all")
+  const [ filters, setFilters ] = useState<Filters>(new Filters())
 
   const history = useHistory()
 
@@ -26,14 +27,14 @@ const ClassesPage = () => {
       <SafePageView>
         <h2>Filtres</h2>
 
-        <ClassFilters />
+        <ClassFilters onChange={setFilters} />
       </SafePageView>
     )
   }
 
   const renderClassList = (tab: ClassesTabs) => {
     return (
-      <ClassList filters={new Filters()} />
+      <ClassList filters={filters} />
     )
   }
 

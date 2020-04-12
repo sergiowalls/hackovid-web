@@ -3,7 +3,7 @@ import { useStoreon } from 'storeon/react'
 
 import { State } from '../../../store/state/State'
 import { Events } from '../../../store/event/Events'
-import { courses, INestedMenuEntry } from '../../../model/Filters'
+import { courses, Filters, INestedMenuEntry } from '../../../model/Filters'
 import { LearningUnit } from '../../../model/LearningUnit'
 
 import './ClassFilters.scss'
@@ -13,6 +13,7 @@ interface INestedEntryState {
   name: string
   id: string
   checked: CheckedState
+  isLearningUnit: boolean
   subentries?: INestedEntryState[]
 }
 
@@ -41,10 +42,35 @@ const NestedMenuEntry = ({ entry, onClick }: NestedMenuEntryProps) => {
   )
 }
 
-const ClassFilters = () => {
+interface ClassFiltersProps {
+  onChange: (filters: Filters) => void
+}
+
+const ClassFilters = ({ onChange }: ClassFiltersProps) => {
   const { learning: { learningUnits } } = useStoreon<State, Events>('learning')
 
   const [ entries , setEntries ] = useState<INestedEntryState[]>([])
+
+  const getFilteredUnits = (currentEntries: INestedEntryState[]): LearningUnit[] => {
+    let result: LearningUnit[] = []
+
+    currentEntries.forEach((currentEntry) => {
+      if (currentEntry.isLearningUnit && currentEntry.checked === CheckedState.Checked) {
+        const id = parseInt(currentEntry.id.substring(currentEntry.id.lastIndexOf(".") + 1))
+        const learningUnit = learningUnits.find((learningUnit) => learningUnit.id === id)
+        if (learningUnit) {
+          result.push(learningUnit)
+        }
+      }
+    })
+
+    return result
+  }
+
+  useEffect(() => {
+    const filteredUnits = getFilteredUnits(entries)
+    onChange(new Filters(filteredUnits))
+  }, [entries])
 
   const getLearningUnitsFor = (learningUnits: LearningUnit[], prefixId: string, parent?: string, superParent?: string): INestedEntryState[] => {
     return learningUnits.filter(learningUnit =>
@@ -52,7 +78,8 @@ const ClassFilters = () => {
     ).map((learningUnit) => ({
       name: learningUnit.title,
       checked: CheckedState.Unchecked,
-      id: `${prefixId}.learningunit.${learningUnit.id}`
+      id: `${prefixId}.learningunit.${learningUnit.id}`,
+      isLearningUnit: true
     }))
   }
 
@@ -69,7 +96,8 @@ const ClassFilters = () => {
       name: nestedEntry.name,
       checked: CheckedState.Unchecked,
       id,
-      subentries
+      subentries,
+      isLearningUnit: false
     }
   }
 

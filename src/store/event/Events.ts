@@ -1,9 +1,15 @@
 import { Alert } from '../../model/Alert'
 import { AuthToken } from '../../model/AuthToken'
 import { LearningUnit } from '../../model/LearningUnit'
+import { User } from '../../model/User'
+
+export interface AuthenticateEvent {
+  token: AuthToken
+  user: User
+}
 
 export interface AuthEvents {
-  'auth/authenticate': AuthToken
+  'auth/authenticate': AuthenticateEvent
   'auth/logout': undefined
 }
 

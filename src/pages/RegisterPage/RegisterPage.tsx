@@ -13,9 +13,11 @@ import { Alert } from '../../model/Alert'
 import { AuthToken } from '../../model/AuthToken'
 import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
+import urls from '../../lib/helpers/urls'
 
 import './RegisterPage.scss'
-import urls from '../../lib/helpers/urls'
+import { UserResponse } from '../../model/http/UserResponse'
+import { assembleUser } from '../../lib/services/responseAssemblers'
 
 const RegisterPage = () => {
   const [ username, setUsername ] = useState<string>('')
@@ -52,9 +54,19 @@ const RegisterPage = () => {
 
           const loginResponse = loginResponseTry as Success<AuthToken>
 
-          dispatch('alert/showAlert', new Alert('Identificació correcta. Hola [persona]!', 'success'))
+          const userResponseTry = await http.get<UserResponse>(urls.user.me(), { isAuthenticated: true, authToken: loginResponse.value })
 
-          dispatch('auth/authenticate', loginResponse.value)
+          if (userResponseTry instanceof Success) {
+            const userResponse = userResponseTry as Success<UserResponse>
+            const user = assembleUser(userResponse.value)
+
+            dispatch('auth/authenticate', { token: loginResponse.value, user })
+
+            dispatch(
+              'alert/showAlert',
+              new Alert(`Identificació correcta. Hola ${user.name}!`, 'success')
+            )
+          }
         }
       } else {
         setIsRegistering(false)

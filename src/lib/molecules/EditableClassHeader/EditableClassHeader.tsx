@@ -6,6 +6,10 @@ import { ClassHeader } from '../../../model/ClassHeader'
 
 import './EditableClassHeader.scss'
 import { ClassViewType } from '../../../model/Class'
+import moment from 'moment'
+import { useStoreon } from 'storeon/react'
+import { State } from '../../../store/state/State'
+import { Events } from '../../../store/event/Events'
 
 interface InputWrapperProps {
   label?: string
@@ -38,8 +42,10 @@ const EditableClassHeader = ({
 }: EditableClassHeaderProps) => {
   const [ title, setTitle ] = useState<string>(header.title)
 
+  const { auth } = useStoreon<State, Events>('auth')
+
   useEffect(() => {
-    onChange(new ClassHeader(title))
+    onChange(new ClassHeader(title, moment(), auth.user!!))
   }, [title])
 
   const renderContent = () => {

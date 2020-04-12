@@ -8,14 +8,16 @@ import { Container } from '../../lib/atoms/Container/Container'
 import { SafePageView } from '../../lib/molecules/SafePageView/SafePageView'
 import { State } from '../../store/state/State'
 import { Events } from '../../store/event/Events'
-import { AuthForm } from '../../lib/molecules/AuthForm/AuthForm'
-
-import './LoginPage.scss'
 import { AuthToken } from '../../model/AuthToken'
 import { Alert } from '../../model/Alert'
 import http from '../../lib/services/http'
 import { Success } from '../../lib/helpers/Try'
+import { AuthForm } from '../../lib/molecules/AuthForm/AuthForm'
 import urls from '../../lib/helpers/urls'
+
+import './LoginPage.scss'
+import { UserResponse } from '../../model/http/UserResponse'
+import { assembleUser } from '../../lib/services/responseAssemblers'
 
 const LoginPage = () => {
   const [ username, setUsername ] = useState<string>('')
@@ -29,22 +31,30 @@ const LoginPage = () => {
     const doLogin = async () => {
       setIsLoging(true)
 
-      const responseTry = await http.post<AuthToken>(urls.login(), {
+      const loginResponseTry = await http.post<AuthToken>(urls.login(), {
         username,
         password
       })
 
-      if (responseTry instanceof Success) {
+      if (loginResponseTry instanceof Success) {
         setIsLoging(false)
 
-        const response = responseTry as Success<AuthToken>
+        const loginResponse = loginResponseTry as Success<AuthToken>
 
-        dispatch(
-          'alert/showAlert',
-          new Alert('Identificació correcta. Hola <persona>!', 'success')
-        )
+        const userResponseTry = await http.get<UserResponse>(urls.user.me(), { isAuthenticated: true, authToken: loginResponse.value })
 
-        dispatch('auth/authenticate', response.value)
+        if (userResponseTry instanceof Success) {
+          const userResponse = userResponseTry as Success<UserResponse>
+          const user = assembleUser(userResponse.value)
+
+          dispatch('auth/authenticate', { token: loginResponse.value, user })
+
+          dispatch(
+            'alert/showAlert',
+            new Alert(`Identificació correcta. Hola ${user.name}!`, 'success')
+          )
+        }
+
       } else {
         setIsLoging(false)
         dispatch(

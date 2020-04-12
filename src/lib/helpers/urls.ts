@@ -3,6 +3,9 @@ import { Filters } from '../../model/Filters'
 const baseUrl = "http://aula.centralyze.io:1337"
 
 export default {
+  user: {
+    me: () => `${baseUrl}/learning/users/me`
+  },
   login: () => `${baseUrl}/api-token-auth/`,
   register: () => `${baseUrl}/learning/users`,
   class: {

@@ -24,7 +24,7 @@ const ClassPage = () => {
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const { auth } = useStoreon<State, Events>('auth')
 
-  const { dispatch } = useStoreon<State, Events>()
+  const { dispatch, learning: { learningUnits } } = useStoreon<State, Events>('learning')
 
   const query = useQuery()
 
@@ -38,7 +38,7 @@ const ClassPage = () => {
         setIsLoading(false)
 
         const response = responseTry as Success<ClassResponse>
-        setClassEntity(assembleClassFrom(response.value))
+        setClassEntity(assembleClassFrom(response.value, learningUnits))
       } else {
         setIsLoading(false)
         dispatch(

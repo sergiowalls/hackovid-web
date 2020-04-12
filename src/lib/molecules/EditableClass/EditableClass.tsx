@@ -34,10 +34,10 @@ const EditableClass = ({
   const [ sections, setSections ] = useState<ClassSection[]>(classEntity.sections)
   const [ openPopover, setOpenPopover ] = useState<number | null>(null)
 
-  const { dispatch, auth } = useStoreon<State,Events>('auth')
+  const { dispatch, auth, learning: { learningUnits } } = useStoreon<State,Events>('auth', 'learning')
 
   useEffect(() => {
-    if (onChange) onChange(new Class(classEntity.id, header, sections))
+    if (onChange) onChange(new Class(classEntity.id, learningUnits[0], header, sections))
   }, [header, sections])
 
   const getNextSectionId = () => {

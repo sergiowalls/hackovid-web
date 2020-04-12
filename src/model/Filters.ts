@@ -54,6 +54,6 @@ export const courses: INestedMenuEntry[] = [
 
 export class Filters {
   constructor(
-    public learningUnits?: LearningUnit
+    public learningUnits?: LearningUnit[]
   ) {}
 }

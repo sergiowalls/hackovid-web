@@ -1,6 +1,6 @@
 import { StoreonModule, StoreonStore } from 'storeon'
 import { State } from './state/State'
-import { Events } from './event/Events'
+import { AuthenticateEvent, Events } from './event/Events'
 import { AuthToken } from '../model/AuthToken'
 
 export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Events>) => {
@@ -21,7 +21,7 @@ export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Ev
     }
   })
 
-  store.on('auth/authenticate', (state: State, event: AuthToken): State => {
+  store.on('auth/authenticate', (state: State, event: AuthenticateEvent): State => {
     console.log(event)
 
     localStorage.setItem('authToken', JSON.stringify(event))
@@ -30,7 +30,8 @@ export const auth: StoreonModule<State, Events> = (store: StoreonStore<State, Ev
       ...state,
       auth: {
         isAuthenticated: true,
-        authToken: event
+        authToken: event.token,
+        user: event.user
       }
     }
   })

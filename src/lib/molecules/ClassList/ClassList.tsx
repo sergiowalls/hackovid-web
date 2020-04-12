@@ -24,7 +24,7 @@ const ClassList = ({
 }: ClassListProps) => {
   const [ classes, setClasses ] = useState<Class[]>([])
 
-  const { dispatch } = useStoreon<State, Events>('auth')
+  const { dispatch, learning: { learningUnits } } = useStoreon<State, Events>('auth', 'learning')
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -32,7 +32,7 @@ const ClassList = ({
 
       if (responseTry instanceof Success) {
         const response = responseTry as Success<ClassResponse[]>
-        setClasses(response.value.map(assembleClassFrom))
+        setClasses(response.value.map((classResponse) => assembleClassFrom(classResponse, learningUnits)))
       } else {
         dispatch(
           'alert/showAlert',
