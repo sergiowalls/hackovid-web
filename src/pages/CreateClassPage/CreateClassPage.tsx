@@ -17,22 +17,27 @@ import urls from '../../lib/helpers/urls'
 
 import './CreateClassPage.scss'
 import { FloatingActionButton } from '../../lib/atoms/FloatingActionButton/FloatingActionButton'
-import {MySavedSections} from "../../lib/molecules/MySavedSections/MySavedSections";
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import {ClassResponse} from "../../model/http/ClassResponse";
 import {assembleClassFrom} from "../../lib/services/responseAssemblers";
+import {MySavedSections} from "../../lib/molecules/MySavedSections/MySavedSections";
+
+const useQuery = () => new URLSearchParams(useLocation().search)
 
 const CreateClassPage = () => {
   const { dispatch, auth, learning: { learningUnits } } = useStoreon<State, Events>('auth', 'learning')
 
   const [ classEntity, setClassEntity ] = useState<Class>(Class.instantiateNew(auth.user!!, learningUnits[0]))
 
+  const learningUnitId = parseInt(useQuery().get('learningUnit')!!)
+  const learningUnit = learningUnits.filter(l => l.id === learningUnitId)[0]
+
   let history = useHistory();
 
   const createClass = async () => {
     const responseTry = await http.post<ClassResponse>(urls.class.create(), {
       title: classEntity.header.title,
-      learning_unit: 1,
+      learning_unit: learningUnit.id,
       sections: classEntity.sections.map((section) => ({
         title: section.title,
         description: section.htmlContent,
@@ -56,9 +61,6 @@ const CreateClassPage = () => {
       <SafePageView>
         <h2>Seccions guardades</h2>
         <MySavedSections/>
-
-
-
       </SafePageView>
     )
   }
@@ -73,6 +75,7 @@ const CreateClassPage = () => {
               onChange={setClassEntity}
               viewType={ClassViewType.Editable}
               title="Nova classe"
+              learningUnit={learningUnit}
             />
 
             <FloatingActionButton
