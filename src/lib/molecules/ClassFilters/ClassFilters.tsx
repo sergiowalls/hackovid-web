@@ -59,7 +59,7 @@ const ClassFilters = () => {
   const getNestedEntryCopy = (nestedEntry: INestedMenuEntry, id: string, parent?: string): INestedEntryState => {
     const filteredUnits = getLearningUnitsFor(learningUnits, id, nestedEntry.name, parent)
 
-    const subentries = nestedEntry.subentries
+    const subentries = nestedEntry.subentries !== undefined
       ? nestedEntry.subentries.map((entry, index) =>
         getNestedEntryCopy(entry, `${id}.node.${index}`, nestedEntry.name)
       )
@@ -101,9 +101,12 @@ const ClassFilters = () => {
       ? currentEntry.subentries.map(entry => modifyState(entry, id))
       : undefined
 
-    result.checked = result.subentries
+    result.checked = (result.subentries !== undefined && result.subentries.length > 0)
       ? (result.subentries.map(isFullyChecked).filter(b => !b).length === 0 ? CheckedState.Checked : CheckedState.Unchecked)
-      : result.checked
+      : (() => {
+        console.log(`${result.id}: ${result.checked}`)
+        return result.checked
+      })()
 
     return result
   }

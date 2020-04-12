@@ -7,8 +7,7 @@ export interface INestedMenuEntry {
 
 export const courses: INestedMenuEntry[] = [
   {
-    name: 'Primària',
-    subentries: []
+    name: 'Primària'
   },
   {
     name: 'Secundària',
