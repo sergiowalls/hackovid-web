@@ -16,21 +16,38 @@ export const courses: INestedMenuEntry[] = [
         name: '1r ESO',
         subentries: [
           { name: 'Matemàtiques' },
-          { name: 'Ciències socials' }
+          { name: 'Ciències socials' },
+          { name: 'Llengua catalana i literatura' },
+          { name: 'Llengua castellana i literatura' },
         ]
       },
       {
         name: '2n ESO',
         subentries: [
-          { name: 'Matemàtiques' }
+          { name: 'Matemàtiques' },
+          { name: 'Ciències socials' },
+          { name: 'Llengua catalana i literatura' },
+          { name: 'Llengua castellana i literatura' },
         ]
       },
       {
         name: '3r ESO',
         subentries: [
-          { name: 'Matemàtiques' }
+          { name: 'Matemàtiques' },
+          { name: 'Ciències socials' },
+          { name: 'Llengua catalana i literatura' },
+          { name: 'Llengua castellana i literatura' },
         ]
-      }
+      },
+      {
+        name: '4t ESO',
+        subentries: [
+          { name: 'Matemàtiques' },
+          { name: 'Ciències socials' },
+          { name: 'Llengua catalana i literatura' },
+          { name: 'Llengua castellana i literatura' },
+        ]
+      },
     ]
   }
 ]
